@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/dog_navigation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dog_navigation"
     app:startDestination="@id/listFragment">
 
     <fragment
         android:id="@+id/listFragment"
         android:name="com.harnet.dogbreeds.view.listFragment"
-        android:label="listFragment" >
+        android:label="listFragment">
         <action
             android:id="@+id/actionDetailFragment"
             app:destination="@id/detailFragment" />
@@ -14,7 +15,7 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.harnet.dogbreeds.view.DetailFragment"
-        android:label="DetailFragment" >
+        android:label="DetailFragment">
         <action
             android:id="@+id/actionListFragment"
             app:destination="@id/listFragment" />
