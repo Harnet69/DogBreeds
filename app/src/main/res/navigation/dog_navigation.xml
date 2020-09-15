@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.harnet.dogbreeds.view.listFragment"
+        android:name="com.harnet.dogbreeds.view.ListFragment"
         android:label="listFragment">
         <action
             android:id="@+id/actionDetailFragment"
