@@ -28,7 +28,9 @@ class ListFragment : Fragment() {
 
         // bound click action to moving to detail fragment
         details_ActionButton.setOnClickListener {
-            val action:NavDirections = ListFragmentDirections.actionDetailFragment()
+            val action = ListFragmentDirections.actionDetailFragment()
+            // set value to destination fragment
+            action.dogId = 5
             Navigation.findNavController(it).navigate(action)
         }
     }
