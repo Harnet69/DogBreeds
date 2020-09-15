@@ -27,13 +27,6 @@ class DetailFragment : Fragment() {
         // receive arguments from sending fragment
         arguments?.let {
             dogId = DetailFragmentArgs.fromBundle(it).dogId
-            receivedTextView.text = dogId.toString()
-        }
-
-        // bound click action to moving to detail fragment
-        list_ActionButton.setOnClickListener {
-            val action = DetailFragmentDirections.actionListFragment()
-            Navigation.findNavController(it).navigate(action)
         }
     }
 }

@@ -22,16 +22,4 @@ class ListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
-    // when view was created and ready to attach actions
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // bound click action to moving to detail fragment
-        details_ActionButton.setOnClickListener {
-            val action = ListFragmentDirections.actionDetailFragment()
-            // set value to destination fragment
-            action.dogId = 5
-            Navigation.findNavController(it).navigate(action)
-        }
-    }
 }
