@@ -24,7 +24,7 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        // receive arguments from sending fragment
         arguments?.let {
             dogId = DetailFragmentArgs.fromBundle(it).dogId
             receivedTextView.text = dogId.toString()
