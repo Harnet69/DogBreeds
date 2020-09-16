@@ -3,6 +3,7 @@ package com.harnet.dogbreeds.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.model.DogBreed
@@ -31,6 +32,12 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<
         //attach view to information from a list
         holder.view.dogName_LinearLayout.text = dogsList[position].dogBreed
         holder.view.dogLifespan.text = dogsList[position].lifespan
+        //add click listener to item and bind it with detail page
+        holder.view.setOnClickListener {
+            // navigate to appropriate detail fragment
+            //TODO send an appropriate entity of DogBreed class there
+            Navigation.findNavController(it).navigate(ListFragmentDirections.actionDetailFragment())
+        }
     }
 
     class DogViewHolder(var view: View) : RecyclerView.ViewHolder(view)
