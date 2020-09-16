@@ -21,8 +21,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/dogImageDetail_ImageView"
-            android:text="Dog name"
+            android:text="Name"
             style="@style/Title"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="4dp"/>
+        <TextView
+            android:id="@+id/dogPurposeDetail_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dogNameDetail_TextView"
+            android:text="Purpose"
+            style="@style/Text"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="4dp"/>
+        <TextView
+            android:id="@+id/dogTemperamentDetail_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dogPurposeDetail_TextView"
+            android:text="Temperament"
+            style="@style/Text"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="4dp"/>
+
+        <TextView
+            android:id="@+id/dogLifespanDetail_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dogTemperamentDetail_TextView"
+            android:text="Lifespan"
+            style="@style/Text"
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"/>
 
