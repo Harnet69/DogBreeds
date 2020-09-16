@@ -20,7 +20,7 @@ class ListViewModel: ViewModel() {
 
         //pass the information to mutable list
         dogs.value = dogsList
-        dogsLoadError.value = true
+        dogsLoadError.value = false
         loading.value = false
     }
 

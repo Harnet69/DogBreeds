@@ -59,7 +59,7 @@ class ListFragment : Fragment() {
         viewModel.dogsLoadError.observe(this, Observer {isError ->
             // check isError not null
             isError?.let {
-                listError_TextView.visibility = View.VISIBLE
+                listError_TextView.visibility = if(it) View.VISIBLE else View.GONE
             }
         })
 
@@ -67,8 +67,13 @@ class ListFragment : Fragment() {
         viewModel.loading.observe(this, Observer { isLoading ->
             //check isLoading not null
             isLoading?.let {
-                // if data still loading - show, else - remove it
+                // if data still loading - show spinner, else - remove it
                 loadingView_ProgressBar.visibility = if(it) View.VISIBLE else View.GONE
+                if(it){
+                    //hide all views when progress bar is visible
+                    listError_TextView.visibility = View.GONE
+                    dogsList_RecyclerView.visibility = View.GONE
+                }
             }
         })
     }
