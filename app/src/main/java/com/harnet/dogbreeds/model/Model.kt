@@ -1,6 +1,6 @@
 package com.harnet.dogbreeds.model
 
-data class dogBreed(
+data class DogBreed(
     val breedId: String?,
     val dogBreed: String?,
     val lifespan: String?,
