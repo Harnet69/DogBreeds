@@ -36,7 +36,10 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<
         holder.view.setOnClickListener {
             // navigate to appropriate detail fragment
             //TODO send an appropriate entity of DogBreed class there
-            Navigation.findNavController(it).navigate(ListFragmentDirections.actionDetailFragment())
+            val action = ListFragmentDirections.actionDetailFragment()
+            // send dog id to DetailFragment
+            action.dogId = position
+            Navigation.findNavController(it).navigate(action)
         }
     }
 

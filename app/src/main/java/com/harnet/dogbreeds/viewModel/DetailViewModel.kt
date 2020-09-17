@@ -9,9 +9,9 @@ class DetailViewModel: ViewModel() {
 
     //retrieve data from database by agrument's id
     //TODO there will be id as argument for retrieveng dog data from a database
-    fun fetch(){
+    fun fetch(dogId: String){
     // attach mock dog to dogLiveData
-        val dog = DogBreed("1", "pug", "12-15 years", "puggy", "sofa", "Wonderful", "")
+        val dog = DogBreed(dogId, "pug", "12-15 years", "puggy", "sofa", "Wonderful", "")
         dogLiveData.value = dog
     }
 }

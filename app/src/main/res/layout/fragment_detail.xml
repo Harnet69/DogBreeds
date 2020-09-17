@@ -17,10 +17,19 @@
             android:scaleType="fitCenter"
             android:minHeight="200dp"/>
         <TextView
-            android:id="@+id/dogNameDetail_TextView"
+            android:id="@+id/dogIdDetail_TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/dogImageDetail_ImageView"
+            android:text="id"
+            style="@style/Title"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="4dp"/>
+        <TextView
+            android:id="@+id/dogNameDetail_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dogIdDetail_TextView"
             android:text="Name"
             style="@style/Title"
             android:layout_centerHorizontal="true"

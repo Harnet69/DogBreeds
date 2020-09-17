@@ -31,15 +31,13 @@ class DetailFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
 
-        //Retrieve a data from DetailViewModel
-        //TODO send a dog id as argument
-        viewModel.fetch()
-
         // receive arguments from sending fragment
         arguments?.let {
             dogId = DetailFragmentArgs.fromBundle(it).dogId
+            //Retrieve a data from DetailViewModel by id
+            //TODO send a dog id as argument
+            viewModel.fetch(dogId.toString())
         }
-
         observeViewModel()
     }
 
@@ -47,6 +45,7 @@ class DetailFragment : Fragment() {
         viewModel.dogLiveData.observe(this, Observer {dog ->
             // if dog isn't null
             dog?.let {
+                dogIdDetail_TextView.text = dog.breedId
                 dogNameDetail_TextView.text = dog.dogBreed
                 dogPurposeDetail_TextView.text = dog.bredFor
                 dogPurposeDetail_TextView.text = dog.temperament
