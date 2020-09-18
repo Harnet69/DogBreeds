@@ -59,6 +59,7 @@ class ListFragment : Fragment() {
         viewModel.dogsLoadError.observe(this, Observer {isError ->
             // check isError not null
             isError?.let {
+                //  ternary operator
                 listError_TextView.visibility = if(it) View.VISIBLE else View.GONE
             }
         })
