@@ -42,6 +42,16 @@ class ListFragment : Fragment() {
             adapter = dogListAdapter
         }
 
+        // Swiper refresh listener(screen refreshing process)
+        refreshLayout.setOnRefreshListener {
+            dogsList_RecyclerView.visibility = View.GONE
+            listError_TextView.visibility = View.GONE
+            loadingView_ProgressBar.visibility = View.VISIBLE
+            viewModel.refresh()
+            refreshLayout.isRefreshing = false // disappears little spinner on the top
+
+        }
+
         observeViewModel()
     }
 

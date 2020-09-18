@@ -3,30 +3,69 @@ package com.harnet.dogbreeds.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.harnet.dogbreeds.model.DogBreed
+import com.harnet.dogbreeds.model.DogsApiService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 
-class ListViewModel: ViewModel() {
-    val dogs = MutableLiveData<List<DogBreed>>()// provide an info of actual list of dogs what we retrieve from data source
-    val dogsLoadError = MutableLiveData<Boolean>()//notify about generic error with data's retrieval because it listens the ViewModel
-    val loading = MutableLiveData<Boolean>()// listening is data is loading
+class ListViewModel : ViewModel() {
+    // instantiate DogsApiService
+    private val dogsService = DogsApiService()
 
-    //refresh information from sources
-    //TODO update this method after implementing backend API retrieval service
-    fun refresh(){
-        //some mock data for testing
-        val dog1 = DogBreed("1", "pug", "12-15 years", "puggy", "sofa", "Wonderful", "")
-        val dog2 = DogBreed("2", "pudel", "13 years", "wolf", "hunting", "Energetic", "")
-        val dog3 = DogBreed("3", "bul", "8-12 years", "fighters", "fight", "Savage", "")
-        val dog4 = DogBreed("4", "buld", "8-12 years", "fighters", "fight", "Savage", "")
-        val dog5 = DogBreed("5", "dog", "8-12 years", "fighters", "fight", "Savage", "")
-        val dog6 = DogBreed("6", "uldog", "8-12 years", "fighters", "fight", "Savage", "")
-        val dog7 = DogBreed("7", "og", "8-12 years", "fighters", "fight", "Savage", "")
-        val dog8 = DogBreed("8", "uld", "8-12 years", "fighters", "fight", "Savage", "")
-        val dogsList = listOf<DogBreed>(dog1, dog2, dog3, dog4, dog5, dog6, dog7, dog8)
+    // allows observe observable Single<List<DogBreed>>, handle retrieving and avoid memory leaks
+    // (can be produced because of waiting for observable while app has been destroyed)
+    private val disposable = CompositeDisposable()
 
-        //pass the information to mutable list
-        dogs.value = dogsList
-        dogsLoadError.value = false
-        loading.value = false
+    // provide an info of actual list of dogs what we retrieve from data source
+    val dogs = MutableLiveData<List<DogBreed>>()
+
+    //notify about generic error with data's retrieval because it listens the ViewModel
+    val dogsLoadError = MutableLiveData<Boolean>()
+
+    // listening is data loading
+    val loading = MutableLiveData<Boolean>()
+
+    //refresh information from remote or local sources
+    fun refresh() {
+        fetchFromRemote()
+    }
+
+    // fetches data from remote API
+    private fun fetchFromRemote() {
+        // set loading flag to true
+        loading.value = true
+        disposable.add(
+            // set it to a different thread(passing this call to the background thread)
+            dogsService.getDogs()
+                .subscribeOn(Schedulers.newThread())
+                // retrieve it from a background to the main thread for displaying
+                .observeOn(AndroidSchedulers.mainThread())
+                // pass our Single object here, it's created and implemented
+                .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>() {
+                    // get list of DogBreed objects
+                    override fun onSuccess(dogsList: List<DogBreed>) {
+                        // set received list to observable mutable list
+                        dogs.value = dogsList
+                        // switch off error message
+                        dogsLoadError.value = false
+                        // switch off waiting spinner
+                        loading.value = false
+                    }
+                    // get an error
+                    override fun onError(e: Throwable) {
+                        dogsLoadError.value = true
+                        loading.value = false
+                        // print stack of error to handling it
+                        e.printStackTrace()
+                    }
+                })
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
     }
 
 }

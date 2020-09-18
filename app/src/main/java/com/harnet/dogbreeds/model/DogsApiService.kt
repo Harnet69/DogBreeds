@@ -11,8 +11,10 @@ class DogsApiService {
     // object created by Retrofit for accessing to an endpoint
     private val api =  Retrofit.Builder()
         .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())// converts JSON to object of our class
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())// convert this object to observable Single<List<>>
+        // handle all basic communication, separate threads, errors and converts JSON to object of our class
+        .addConverterFactory(GsonConverterFactory.create())
+        // convert this object to observable Single<List<>>
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
         .create(DogsAPI::class.java)// create model class
 
