@@ -33,6 +33,8 @@ class ListViewModel : ViewModel() {
 
     // fetches data from remote API
     private fun fetchFromRemote() {
+        //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
+
         // set loading flag to true
         loading.value = true
         disposable.add(
