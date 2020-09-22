@@ -1,14 +1,16 @@
 package com.harnet.dogbreeds.util
 
 import android.os.AsyncTask
+import android.util.Log
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
 class OwnDataDownloader : AsyncTask<String?, Void?, String?>() {
-    private val dataParser = DataParser()
+    private val dataParser = OwnDataParser()
 
     override fun doInBackground(vararg urls: String?): String? {
+        Log.i("JsonObjectrr", "doInBackground: " + urls.get(0))
         val result = StringBuilder()
         val url: URL
         val connection: HttpURLConnection
@@ -33,6 +35,7 @@ class OwnDataDownloader : AsyncTask<String?, Void?, String?>() {
     // callback after getting a dataForecast
     override fun onPostExecute(s: String?) {
         super.onPostExecute(s)
+        Log.i("JsonObjectrr", "onPostExecute: " + s)
         //get dataForecast from API
         dataParser.parseDataFromJSONStr(s)
     }

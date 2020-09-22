@@ -1,9 +1,12 @@
 package com.harnet.dogbreeds.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.harnet.dogbreeds.model.DogBreed
 import com.harnet.dogbreeds.model.DogsApiService
+import com.harnet.dogbreeds.util.OwnDataDownloader
+import com.harnet.dogbreeds.util.OwnDataParser
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -29,11 +32,15 @@ class ListViewModel : ViewModel() {
     //refresh information from remote or local sources
     fun refresh() {
         fetchFromRemoteWithRetrofit()
+        fetchFromRemoteWithOwnParser()
     }
 
     // fetches data with OWN API PARSER from remote API
     private fun fetchFromRemoteWithOwnParser() {
+        val ownDataDownloader = OwnDataDownloader()
 
+        val jsonContent = ownDataDownloader.execute("https://raw.githubusercontent.com/DevTides/DogsApi/master/dogs.json")
+        Log.i("JsonObjectrr", "fetchFromRemoteWithOwnParser: " + jsonContent)
     }
     // fetches data with Retrofit library from remote API
     private fun fetchFromRemoteWithRetrofit() {
