@@ -10,7 +10,6 @@ class OwnDataDownloader : AsyncTask<String?, Void?, String?>() {
     private val dataParser = OwnDataParser()
 
     override fun doInBackground(vararg urls: String?): String? {
-        Log.i("JsonObjectrr", "doInBackground: " + urls.get(0))
         val result = StringBuilder()
         val url: URL
         val connection: HttpURLConnection
@@ -35,7 +34,6 @@ class OwnDataDownloader : AsyncTask<String?, Void?, String?>() {
     // callback after getting a dataForecast
     override fun onPostExecute(s: String?) {
         super.onPostExecute(s)
-//        Log.i("JsonObjectrr", "onPostExecute: " + s)
         //get dataForecast from API
         dataParser.parseDataFromJSONStr(s)
     }
