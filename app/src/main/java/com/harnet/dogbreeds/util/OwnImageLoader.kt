@@ -7,7 +7,7 @@ import com.harnet.dogbreeds.BuildConfig
 import java.net.HttpURLConnection
 import java.net.URL
 
-class ImageDownloader : AsyncTask<String?, Void?, Bitmap?>() {
+class OwnImageLoader : AsyncTask<String?, Void?, Bitmap?>() {
     private var myBitmap: Bitmap? = null
 
     // the method return an image asynchronicity

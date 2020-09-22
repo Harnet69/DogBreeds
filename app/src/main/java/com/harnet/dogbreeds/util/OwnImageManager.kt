@@ -3,8 +3,8 @@ package com.harnet.dogbreeds.util
 import android.graphics.Bitmap
 import java.util.concurrent.ExecutionException
 
-class ImageController {
-    private val imageDownloader = ImageDownloader()
+class OwnImageManager {
+    private val imageDownloader = OwnImageLoader()
     fun getImageByLink(imageLink: String?): Bitmap? {
         return try {
             val img = imageDownloader.execute(imageLink).get()!!

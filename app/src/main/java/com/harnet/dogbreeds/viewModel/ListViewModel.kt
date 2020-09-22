@@ -28,11 +28,15 @@ class ListViewModel : ViewModel() {
 
     //refresh information from remote or local sources
     fun refresh() {
-        fetchFromRemote()
+        fetchFromRemoteWithRetrofit()
     }
 
-    // fetches data from remote API
-    private fun fetchFromRemote() {
+    // fetches data with OWN API PARSER from remote API
+    private fun fetchFromRemoteWithOwnParser() {
+
+    }
+    // fetches data with Retrofit library from remote API
+    private fun fetchFromRemoteWithRetrofit() {
         //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
 
         // set loading flag to true
