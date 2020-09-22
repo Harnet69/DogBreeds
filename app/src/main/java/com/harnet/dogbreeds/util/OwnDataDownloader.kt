@@ -2,12 +2,15 @@ package com.harnet.dogbreeds.util
 
 import android.os.AsyncTask
 import android.util.Log
+import com.harnet.dogbreeds.model.DogBreed
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
 class OwnDataDownloader : AsyncTask<String?, Void?, String?>() {
     private val dataParser = OwnDataParser()
+
+    var dogs = mutableListOf<DogBreed>()
 
     override fun doInBackground(vararg urls: String?): String? {
         val result = StringBuilder()
@@ -35,6 +38,7 @@ class OwnDataDownloader : AsyncTask<String?, Void?, String?>() {
     override fun onPostExecute(s: String?) {
         super.onPostExecute(s)
         //get dataForecast from API
-        dataParser.parseDataFromJSONStr(s)
+        dogs = dataParser.parseDataFromJSONStr(s)
+        println(dogs.size)
     }
 }

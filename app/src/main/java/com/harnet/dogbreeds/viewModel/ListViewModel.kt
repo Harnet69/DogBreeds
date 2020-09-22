@@ -40,6 +40,7 @@ class ListViewModel : ViewModel() {
         val ownDataDownloader = OwnDataDownloader()
 
         ownDataDownloader.execute("https://raw.githubusercontent.com/DevTides/DogsApi/master/dogs.json")
+        Log.i("DogsFromAPI", "fetchFromRemoteWithOwnParser: " + dogs)
     }
 
     // fetches data with Retrofit library from remote API
