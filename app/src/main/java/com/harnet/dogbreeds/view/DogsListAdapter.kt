@@ -36,6 +36,7 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<
     override fun getItemCount() = dogsList.size
 
     override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
+        var dogImageView =  holder.view.dogImage_ImageView.setImageResource(R.mipmap.ic_dog_ico)
             // load images by ImageController
         //attach view to information from a list
         // load images with non-Glide approach
