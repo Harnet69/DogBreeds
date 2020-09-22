@@ -9,13 +9,34 @@ class OwnDataParser {
     fun parseDataFromJSONStr(jsonStr: String?) {
         var trimmedStr: String? = null
         if (jsonStr != null) {
+            // there was a problem with the API!!!
             trimmedStr = jsonStr.substring(1, jsonStr.length-1)
-//            Log.i("JsonObjectrr", "type " + {jsonStr::class.simpleName} )
-//            println(jsonStr.substring(1, jsonStr.length-1))
+//            println(trimmedStr)
         }
         try {
+            //TODO get only the first object
             val jsonObject = JSONObject(trimmedStr!!)
-            Log.i("JsonObjectrr", "parseDataFromJSONStr: arter " + jsonObject)
+//            println(jsonObject)
+
+            //work solution
+            val jsonArray = JSONArray(jsonStr);
+            for (i in 0 until jsonArray.length()) {
+                val obj: JSONObject = jsonArray.get(i) as JSONObject;
+                println(obj.getString("name"))
+
+
+//                JSONArray results = patient.getJSONArray("results");
+//                String indexForPhone =  patientProfile.getJSONObject(0).getString("indexForPhone"));
+            }
+
+            //TODO think about parsing multiple array
+//            val dogsArray = JSONArray(jsonObject)
+//            Log.i("JsonObjectrr", "parseDataFromJSONStr: array " + dogsArray)
+//            for(param in 0 until dogsArray.length()){
+//                val dog = dogsArray.getJSONObject(param)
+//                Log.i("JsonObjectrr", "parseDataFromJSONStr: param $dog")
+//            }
+
 //            val weather = jsonObject.getString("weather")
 //
 //            val weatherArr = JSONArray(weather)
