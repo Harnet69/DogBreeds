@@ -1,8 +1,11 @@
 package com.harnet.dogbreeds.view
 
+import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.UiThread
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.harnet.dogbreeds.R
@@ -12,6 +15,7 @@ import com.harnet.dogbreeds.util.getProgressDrawable
 import com.harnet.dogbreeds.util.loadImage
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import kotlinx.android.synthetic.main.item_dog.view.*
+import java.util.concurrent.CompletableFuture
 
 class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<DogsListAdapter.DogViewHolder>() {
     //for updating information from a backend
@@ -32,12 +36,25 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<
     override fun getItemCount() = dogsList.size
 
     override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
-        // load images by ImageController
-        val imageController = ImageController()
+            // load images by ImageController
         //attach view to information from a list
         // load images with non-Glide approach
-        val image = imageController.getImageByLink(dogsList[position].imageURL)
-        holder.view.dogImage_ImageView.setImageBitmap(image)
+//        Log.i("imageDogs", "onBindViewHolder: " + holder.view.dogImage_ImageView.drawable)
+        holder.view.dogImage_ImageView.drawable.let {
+            val imageController = ImageController()
+            CompletableFuture.supplyAsync {
+                imageController.getImageByLink(dogsList[position].imageURL)
+            }
+                .thenAccept { image ->
+                    var activity = holder.view.context as Activity
+                    activity.runOnUiThread(Runnable {
+                        holder.view.dogImage_ImageView.setImageBitmap(image)
+                    })
+                }
+        }
+
+//        val image = imageController.getImageByLink(dogsList[position].imageURL)
+//        holder.view.dogImage_ImageView.setImageBitmap(image)
         // user KTX extended loadImage function(context we can get from any view!!!)
 //        holder.view.dogImage_ImageView.loadImage(dogsList[position].imageURL, getProgressDrawable(holder.view.context))
         holder.view.dogName_LinearLayout.text = dogsList[position].dogBreed
