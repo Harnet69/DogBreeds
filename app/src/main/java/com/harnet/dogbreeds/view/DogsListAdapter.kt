@@ -28,7 +28,7 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
         val inflator = LayoutInflater.from(parent.context)
-        // elements of the list transforms into views
+        // elements of the list transformed into views
         val view = inflator.inflate(R.layout.item_dog, parent, false)
         return DogViewHolder(view)
     }
@@ -36,28 +36,16 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<
     override fun getItemCount() = dogsList.size
 
     override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
-        var dogImageView =  holder.view.dogImage_ImageView.setImageResource(R.mipmap.ic_dog_ico)
-            // load images by ImageController
+        holder.view.dogImage_ImageView.setImageResource(R.mipmap.ic_dog_ico)
         //attach view to information from a list
-        // load images with non-Glide approach
-//        Log.i("imageDogs", "onBindViewHolder: " + holder.view.dogImage_ImageView.drawable)
-        holder.view.dogImage_ImageView.drawable.let {
-            val imageController = ImageController()
-            CompletableFuture.supplyAsync {
-                imageController.getImageByLink(dogsList[position].imageURL)
-            }
-                .thenAccept { image ->
-                    var activity = holder.view.context as Activity
-                    activity.runOnUiThread(Runnable {
-                        holder.view.dogImage_ImageView.setImageBitmap(image)
-                    })
-                }
-        }
 
-//        val image = imageController.getImageByLink(dogsList[position].imageURL)
-//        holder.view.dogImage_ImageView.setImageBitmap(image)
-        // user KTX extended loadImage function(context we can get from any view!!!)
-//        holder.view.dogImage_ImageView.loadImage(dogsList[position].imageURL, getProgressDrawable(holder.view.context))
+        //TODO make swotcher for two approaches of images loading: own and Glide's
+
+        // load images by ImageController (non-Glide approach)
+//        loadImageByOwnImageLoader(holder, position)
+        // load by user KTX extended loadImage function(context we can get from any view!!!)
+        holder.view.dogImage_ImageView.loadImage(dogsList[position].imageURL, getProgressDrawable(holder.view.context))
+
         holder.view.dogName_LinearLayout.text = dogsList[position].dogBreed
         holder.view.dogLifespan.text = dogsList[position].lifespan
         //add click listener to item and bind it with detail page
@@ -72,4 +60,20 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<
     }
 
     class DogViewHolder(var view: View) : RecyclerView.ViewHolder(view)
+
+    // load image with own ImageLoader
+    private fun loadImageByOwnImageLoader(holder: DogViewHolder, position: Int){
+        holder.view.dogImage_ImageView.drawable.let {
+            val imageController = ImageController()
+            CompletableFuture.supplyAsync {
+                imageController.getImageByLink(dogsList[position].imageURL)
+            }
+                .thenAccept { image ->
+                    val activity = holder.view.context as Activity
+                    activity.runOnUiThread(Runnable {
+                        holder.view.dogImage_ImageView.setImageBitmap(image)
+                    })
+                }
+        }
+    }
 }
