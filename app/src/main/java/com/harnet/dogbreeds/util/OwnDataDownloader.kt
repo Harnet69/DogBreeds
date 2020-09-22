@@ -35,7 +35,7 @@ class OwnDataDownloader : AsyncTask<String?, Void?, String?>() {
     // callback after getting a dataForecast
     override fun onPostExecute(s: String?) {
         super.onPostExecute(s)
-        Log.i("JsonObjectrr", "onPostExecute: " + s)
+//        Log.i("JsonObjectrr", "onPostExecute: " + s)
         //get dataForecast from API
         dataParser.parseDataFromJSONStr(s)
     }

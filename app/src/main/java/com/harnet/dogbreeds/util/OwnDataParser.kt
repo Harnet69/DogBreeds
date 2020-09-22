@@ -7,9 +7,15 @@ import org.json.JSONObject
 
 class OwnDataParser {
     fun parseDataFromJSONStr(jsonStr: String?) {
+        var trimmedStr: String? = null
+        if (jsonStr != null) {
+            trimmedStr = jsonStr.substring(1, jsonStr.length-1)
+//            Log.i("JsonObjectrr", "type " + {jsonStr::class.simpleName} )
+//            println(jsonStr.substring(1, jsonStr.length-1))
+        }
         try {
-            val jsonObject = JSONObject(jsonStr)
-            Log.i("JsonObjectrr", "parseDataFromJSONStr: " + jsonObject)
+            val jsonObject = JSONObject(trimmedStr!!)
+            Log.i("JsonObjectrr", "parseDataFromJSONStr: arter " + jsonObject)
 //            val weather = jsonObject.getString("weather")
 //
 //            val weatherArr = JSONArray(weather)
