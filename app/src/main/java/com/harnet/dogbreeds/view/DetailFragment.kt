@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import com.harnet.dogbreeds.R
+import com.harnet.dogbreeds.util.getProgressDrawable
+import com.harnet.dogbreeds.util.loadImage
 import com.harnet.dogbreeds.viewModel.DetailViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -58,6 +60,11 @@ class DetailFragment : Fragment() {
         viewModel.dogLiveData.observe(this, Observer {dog ->
             // if dog isn't null
             dog?.let {
+                context?.let { it1 -> getProgressDrawable(it1) }?.let { it2 ->
+                    dogImageDetail_ImageView.loadImage(dogImagURL,
+                        it2
+                    )
+                }
                 dogIdDetail_TextView.text = dog.breedId
                 dogNameDetail_TextView.text = dog.dogBreed
                 dogPurposeDetail_TextView.text = dog.bredFor
