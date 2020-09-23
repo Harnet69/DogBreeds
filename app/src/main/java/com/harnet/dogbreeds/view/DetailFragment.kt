@@ -46,7 +46,7 @@ class DetailFragment : Fragment() {
             dogBredFor = DetailFragmentArgs.fromBundle(it).dogBredFor
             dogTemperament = DetailFragmentArgs.fromBundle(it).dogTemperament
             dogImagURL = DetailFragmentArgs.fromBundle(it).dogImagURL
-            //Retrieve a data from DetailViewModel by id
+            //Retrieve a data from DetailViewModel
             //TODO send a dog id as argument
             viewModel.fetch(dogId, dogName, dogLifeSpan, dogBreedGroup, dogBredFor, dogTemperament, dogImagURL)
 
@@ -61,7 +61,7 @@ class DetailFragment : Fragment() {
                 dogIdDetail_TextView.text = dog.breedId
                 dogNameDetail_TextView.text = dog.dogBreed
                 dogPurposeDetail_TextView.text = dog.bredFor
-                dogPurposeDetail_TextView.text = dog.temperament
+                dogTemperamentDetail_TextView.text = dog.temperament
                 dogLifespanDetail_TextView.text = dog.lifespan
             }
         })
