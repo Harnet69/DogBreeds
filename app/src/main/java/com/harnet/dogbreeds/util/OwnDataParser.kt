@@ -4,13 +4,24 @@ import com.harnet.dogbreeds.model.DogBreed
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.concurrent.ExecutionException
 
 class OwnDataParser {
 
-    fun parseDataFromJSONStr(jsonStr: String?): MutableList<DogBreed> {
+    fun parseDataFromJSONStr(): MutableList<DogBreed> {
     val dogs = mutableListOf<DogBreed>()
 
-        val jsonArray = JSONArray(jsonStr);
+        var content: String? = null
+        try {
+            content = OwnDataDownloader().execute("https://raw.githubusercontent.com/DevTides/DogsApi/master/dogs.json").get()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        }
+
+
+        val jsonArray = JSONArray(content);
         for (i in 0 until jsonArray.length()) {
             val obj: JSONObject = jsonArray.get(i) as JSONObject
             val id: String = obj.optString("id")
