@@ -11,6 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.CompletableFuture
 
 class ListViewModel : ViewModel() {
     // instantiate DogsApiService
@@ -29,23 +30,35 @@ class ListViewModel : ViewModel() {
     // listening is data loading
     val loading = MutableLiveData<Boolean>()
 
+    //TODO make a switcher for switch between two approaches of API fetching
+
     //refresh information from remote or local sources
     fun refresh() {
-        fetchFromRemoteWithRetrofit()
+//        fetchFromRemoteWithRetrofit()
         fetchFromRemoteWithOwnParser()
     }
 
     // fetches data with OWN API PARSER from remote API
     private fun fetchFromRemoteWithOwnParser() {
+        //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
         val ownDataParser = OwnDataParser()
-        var dogBreeds: List<DogBreed> = ownDataParser.parseDataFromJSONStr()
-        Log.i("NewDogsFromAPI", "fetchFromRemoteWithOwnParser: " + dogBreeds)
+        // set loading flag to true
+        loading.value = true
+
+        CompletableFuture.supplyAsync { ownDataParser.parseDataFromJSONStr() }
+            .thenAccept {dogsFromAPI ->
+                // set received list to observable mutable list
+                dogs.postValue(dogsFromAPI)
+                // switch off error message
+                dogsLoadError.postValue(false)
+                // switch off waiting spinner
+                loading.postValue(false)
+            }
     }
 
     // fetches data with Retrofit library from remote API
     private fun fetchFromRemoteWithRetrofit() {
         //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
-
         // set loading flag to true
         loading.value = true
         disposable.add(
@@ -80,5 +93,4 @@ class ListViewModel : ViewModel() {
         super.onCleared()
         disposable.clear()
     }
-
 }
