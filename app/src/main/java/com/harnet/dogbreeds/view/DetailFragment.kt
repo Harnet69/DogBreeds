@@ -16,7 +16,13 @@ import kotlinx.android.synthetic.main.fragment_list.*
 
 class DetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
-    var dogId = 0
+    lateinit var dogId: String
+    lateinit var dogName: String
+    lateinit var dogLifeSpan: String
+    lateinit var dogBreedGroup: String
+    lateinit var dogBredFor: String
+    lateinit var dogTemperament: String
+    lateinit var dogImagURL: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +40,16 @@ class DetailFragment : Fragment() {
         // receive arguments from sending fragment
         arguments?.let {
             dogId = DetailFragmentArgs.fromBundle(it).dogId
+            dogName = DetailFragmentArgs.fromBundle(it).dogName
+            dogLifeSpan = DetailFragmentArgs.fromBundle(it).dogLifeSpan
+            dogBreedGroup = DetailFragmentArgs.fromBundle(it).dogBreedGroup
+            dogBredFor = DetailFragmentArgs.fromBundle(it).dogBredFor
+            dogTemperament = DetailFragmentArgs.fromBundle(it).dogTemperament
+            dogImagURL = DetailFragmentArgs.fromBundle(it).dogImagURL
             //Retrieve a data from DetailViewModel by id
             //TODO send a dog id as argument
-            viewModel.fetch(dogId.toString())
+            viewModel.fetch(dogId, dogName, dogLifeSpan, dogBreedGroup, dogBredFor, dogTemperament, dogImagURL)
+
         }
         observeViewModel()
     }

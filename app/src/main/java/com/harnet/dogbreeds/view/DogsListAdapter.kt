@@ -38,7 +38,7 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<
 
         //TODO make swotcher for two approaches of images loading: own and Glide's
 
-        // load images by ImageController (non-Glide approach)
+        // load images by own ImageController (non-Glide approach)
 //        loadImageByOwnImageLoader(holder, position)
         // load by user KTX extended loadImage function(context we can get from any view!!!)
         holder.view.dogImage_ImageView.loadImage(dogsList[position].imageURL, getProgressDrawable(holder.view.context))
@@ -51,7 +51,14 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<
             //TODO send an appropriate entity of DogBreed class there
             val action = ListFragmentDirections.actionDetailFragment()
             // send dog id to DetailFragment
-            action.dogId = position
+            action.dogId = dogsList[position].breedId.toString()
+            action.dogName = dogsList[position].dogBreed.toString()
+            action.dogLifeSpan = dogsList[position].lifespan.toString()
+            action.dogBreedGroup = dogsList[position].breedGrupp.toString()
+            action.dogBredFor = dogsList[position].bredFor.toString()
+            action.dogTemperament = dogsList[position].temperament.toString()
+            action.dogImagURL = dogsList[position].imageURL.toString()
+
             Navigation.findNavController(it).navigate(action)
         }
     }

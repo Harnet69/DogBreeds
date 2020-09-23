@@ -23,7 +23,31 @@
             app:destination="@id/listFragment" />
         <argument
             android:name="dogId"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="string" />
+        <argument
+            android:name="dogName"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="dogLifeSpan"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="dogBreedGroup"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="dogBredFor"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="dogTemperament"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="dogImagURL"
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
 </navigation>
