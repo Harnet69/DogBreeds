@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
     // back arrow
     lateinit var navController: NavController
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -23,5 +23,10 @@ class MainActivity : AppCompatActivity() {
     //for back arrow
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, null)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        println("Stop")
     }
 }

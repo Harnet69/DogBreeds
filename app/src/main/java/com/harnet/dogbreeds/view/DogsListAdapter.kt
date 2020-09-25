@@ -14,9 +14,10 @@ import com.harnet.dogbreeds.util.loadImage
 import kotlinx.android.synthetic.main.item_dog.view.*
 import java.util.concurrent.CompletableFuture
 
-class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<DogsListAdapter.DogViewHolder>() {
+class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
+    RecyclerView.Adapter<DogsListAdapter.DogViewHolder>() {
     //for updating information from a backend
-    fun updateDogList(newDogsList: List<DogBreed>){
+    fun updateDogList(newDogsList: List<DogBreed>) {
         dogsList.clear()
         dogsList.addAll(newDogsList)
         //reset RecycleView and recreate a list
@@ -35,16 +36,20 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
         holder.view.dogImage_ImageView.setImageResource(R.mipmap.ic_dog_ico)
         //attach view to information from a list
-
-        //TODO make swotcher for two approaches of images loading: own and Glide's
+        //TODO make switcher for two approaches of images loading: own and Glide's
 
         // load images by own ImageController (non-Glide approach)
 //        loadImageByOwnImageLoader(holder, position)
-        // load by user KTX extended loadImage function(context we can get from any view!!!)
-        holder.view.dogImage_ImageView.loadImage(dogsList[position].imageURL, getProgressDrawable(holder.view.context))
 
+        // load by user KTX extended loadImage function(context we can get from any view!!!)
+        holder.view.dogImage_ImageView.loadImage(
+            dogsList[position].imageURL,
+            getProgressDrawable(holder.view.context)
+        )
+        // bind data to view elements
         holder.view.dogName_LinearLayout.text = dogsList[position].dogBreed
         holder.view.dogLifespan.text = dogsList[position].lifespan
+
         //add click listener to item and bind it with detail page
         holder.view.setOnClickListener {
             // navigate to appropriate detail fragment
@@ -66,7 +71,7 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) : RecyclerView.Adapter<
     class DogViewHolder(var view: View) : RecyclerView.ViewHolder(view)
 
     // load image with own ImageLoader
-    private fun loadImageByOwnImageLoader(holder: DogViewHolder, position: Int){
+    private fun loadImageByOwnImageLoader(holder: DogViewHolder, position: Int) {
         holder.view.dogImage_ImageView.drawable.let {
             val imageController = OwnImageManager()
             CompletableFuture.supplyAsync {

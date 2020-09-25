@@ -16,7 +16,7 @@ fun getProgressDrawable(context: Context): CircularProgressDrawable {
     }
 }
 
-//extension for auto loading image of ImageView element
+//extension for auto loading image of ImageView element using Glide library
 fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable) {
     val options = RequestOptions()
         .placeholder(progressDrawable)

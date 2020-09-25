@@ -34,8 +34,8 @@ class ListViewModel : ViewModel() {
 
     //refresh information from remote or local sources
     fun refresh() {
-        fetchFromRemoteWithRetrofit()
-//        fetchFromRemoteWithOwnParser()
+//        fetchFromRemoteWithRetrofit()
+        fetchFromRemoteWithOwnParser()
     }
 
     // fetches data with OWN API PARSER from remote API

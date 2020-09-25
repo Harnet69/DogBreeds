@@ -22,7 +22,6 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
@@ -49,15 +48,14 @@ class ListFragment : Fragment() {
             loadingView_ProgressBar.visibility = View.VISIBLE
             viewModel.refresh()
             refreshLayout.isRefreshing = false // disappears little spinner on the top
-
         }
 
         observeViewModel()
     }
 
-    fun observeViewModel(){
+    fun observeViewModel() {
         // update the layout using values of mutable variables from a ViewModel
-        viewModel.dogs.observe(this, Observer {dogs ->
+        viewModel.dogs.observe(this, Observer { dogs ->
             //checking is dogs list isn't null
             dogs?.let {
                 dogsList_RecyclerView.visibility = View.VISIBLE
@@ -66,11 +64,11 @@ class ListFragment : Fragment() {
         })
 
         // make error TextViewVisible
-        viewModel.dogsLoadError.observe(this, Observer {isError ->
+        viewModel.dogsLoadError.observe(this, Observer { isError ->
             // check isError not null
             isError?.let {
                 //  ternary operator
-                listError_TextView.visibility = if(it) View.VISIBLE else View.GONE
+                listError_TextView.visibility = if (it) View.VISIBLE else View.GONE
             }
         })
 
@@ -79,8 +77,8 @@ class ListFragment : Fragment() {
             //check isLoading not null
             isLoading?.let {
                 // if data still loading - show spinner, else - remove it
-                loadingView_ProgressBar.visibility = if(it) View.VISIBLE else View.GONE
-                if(it){
+                loadingView_ProgressBar.visibility = if (it) View.VISIBLE else View.GONE
+                if (it) {
                     //hide all views when progress bar is visible
                     listError_TextView.visibility = View.GONE
                     dogsList_RecyclerView.visibility = View.GONE
@@ -88,5 +86,4 @@ class ListFragment : Fragment() {
             }
         })
     }
-
 }

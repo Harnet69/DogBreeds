@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutionException
 
 class OwnImageManager {
     private val imageDownloader = OwnImageLoader()
+
     fun getImageByLink(imageLink: String?): Bitmap? {
         return try {
             val img = imageDownloader.execute(imageLink).get()!!

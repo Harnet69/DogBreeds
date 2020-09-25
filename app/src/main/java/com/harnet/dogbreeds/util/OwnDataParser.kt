@@ -9,9 +9,10 @@ import java.util.concurrent.ExecutionException
 class OwnDataParser {
 
     fun parseDataFromJSONStr(): MutableList<DogBreed> {
-    val dogs = mutableListOf<DogBreed>()
-
+        val dogs = mutableListOf<DogBreed>()
         var content: String? = null
+
+        // get data from API Json file
         try {
             content = OwnDataDownloader().execute("https://raw.githubusercontent.com/DevTides/DogsApi/master/dogs.json").get()
         } catch (e: InterruptedException) {
@@ -20,7 +21,7 @@ class OwnDataParser {
             e.printStackTrace()
         }
 
-
+        // parse data from JsonString
         val jsonArray = JSONArray(content);
         for (i in 0 until jsonArray.length()) {
             val obj: JSONObject = jsonArray.get(i) as JSONObject
@@ -32,6 +33,7 @@ class OwnDataParser {
             val temperament: String = obj.optString("temperament")
             val url: String = obj.optString("url")
 
+            // create and an object to its list
             dogs.add(DogBreed(id, name, lifeSpan, breedGroup, bredFor, temperament, url))
 //            println("$id $name $lifeSpan $breedGroup $bredFor $temperament $url")
         }
