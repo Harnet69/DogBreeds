@@ -34,8 +34,8 @@ class ListViewModel : ViewModel() {
 
     //refresh information from remote or local sources
     fun refresh() {
-//        fetchFromRemoteWithRetrofit()
-        fetchFromRemoteWithOwnParser()
+        fetchFromRemoteWithRetrofit()
+//        fetchFromRemoteWithOwnParser()
     }
 
     // fetches data with OWN API PARSER from remote API
@@ -71,6 +71,7 @@ class ListViewModel : ViewModel() {
                 .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>() {
                     // get list of DogBreed objects
                     override fun onSuccess(dogsList: List<DogBreed>) {
+                        //TODO store this information and time of retrieveng in a db as a cache
                         // set received list to observable mutable list
                         dogs.value = dogsList
                         // switch off error message
