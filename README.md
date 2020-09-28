@@ -1,7 +1,8 @@
 # DogBreeds app (Kotlin, AndroidX & JetPack)
+Android application for introducing with dog breeds and showing the breed details 
 
-## Goals:
-- teach user to recognize different breeds of dogs in game manner 
+## Application screenshots:
+![Game process](https://github.com/Harnet69/DogBreeds/blob/master/app/GitHubMediaFile/dog_breeds.gif)
 
 ## Technologies:
 - AndroidX (Google repository extension library. Includes JetPack too. All new projects after SDK28 must be on this)
