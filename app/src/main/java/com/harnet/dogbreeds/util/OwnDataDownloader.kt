@@ -1,8 +1,6 @@
 package com.harnet.dogbreeds.util
 
 import android.os.AsyncTask
-import android.util.Log
-import com.harnet.dogbreeds.model.DogBreed
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -14,8 +12,8 @@ class OwnDataDownloader : AsyncTask<String?, Void?, String?>() {
         try {
             val url = URL(urls[0])
             val connection = url.openConnection() as HttpURLConnection
-            val `in` = connection.inputStream
-            val reader = InputStreamReader(`in`)
+            val `IN` = connection.inputStream
+            val reader = InputStreamReader(`IN`)
             var data = reader.read()
             while (data != -1) {
                 val current = data.toChar()

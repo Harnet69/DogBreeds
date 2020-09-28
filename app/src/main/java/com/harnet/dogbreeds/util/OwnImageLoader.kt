@@ -39,8 +39,8 @@ class OwnImageLoader : AsyncTask<String?, Void?, Bitmap?>() {
                 error("Assertion failed")
             }
             connection!!.connect()
-            val `in` = connection.inputStream
-            myBitmap = BitmapFactory.decodeStream(`in`)
+            val `IN` = connection.inputStream
+            myBitmap = BitmapFactory.decodeStream(`IN`)
             myBitmap
         } catch (e: Exception) {
             e.printStackTrace()
