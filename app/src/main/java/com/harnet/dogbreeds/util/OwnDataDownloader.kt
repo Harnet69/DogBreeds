@@ -12,8 +12,8 @@ class OwnDataDownloader : AsyncTask<String?, Void?, String?>() {
         try {
             val url = URL(urls[0])
             val connection = url.openConnection() as HttpURLConnection
-            val `IN` = connection.inputStream
-            val reader = InputStreamReader(`IN`)
+            val iN = connection.inputStream
+            val reader = InputStreamReader(iN)
             var data = reader.read()
             while (data != -1) {
                 val current = data.toChar()
