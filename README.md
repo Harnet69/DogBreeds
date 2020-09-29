@@ -1,4 +1,4 @@
-# DogBreeds app
+# DogBreeds app [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Harnet69_DogBreeds)](https://sonarcloud.io/dashboard?id=Harnet69_DogBreeds)
 Android application for introducing with dog breeds and showing the breed details 
 
 ## Application screenshots:
