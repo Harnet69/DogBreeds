@@ -5,17 +5,37 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000629772">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000460297">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: clean assembleDebug" time="23.662293228">
+      <testcase classname="fastlane.lanes" name="1: assembleRelease" time="5.011158259">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: slack" time="0.512140648">
+      <testcase classname="fastlane.lanes" name="2: Switch to android upload_to_slack lane" time="0.000282396">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: echo Uploading app-release.apk to Slack" time="0.001531759">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: curl https://slack.com/api/files.upload -F token=&quot;xoxp-1394444862738-1400636711412-1395243165346-ea0bdbf4e951b00daa424403741ec47b&quot; -F channels=&quot;apks&quot; -F title=&quot;app-release.apk&quot; -F filename=&quot;app-release.apk&quot; -F file=@/home/harnet/AndroidStudioProjects/Kotlin/Dogbreeds/app/build/outputs/apk/release/app-release.apk" time="1.461687397">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: slack" time="0.408615805">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: slack" time="0.407830788">
         
       </testcase>
     
