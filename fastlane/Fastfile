@@ -16,29 +16,45 @@
 default_platform(:android)
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
-
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
-  end
-
-  before_all do# Reads the local.properties file and returns the the slack webhook url.
+  before_all do
+    # Read the local.properties
     f = File.open("../local.properties", "r")
     ENV["SLACK_URL"] = f.each_line.to_a.last.split('=').last
     f.close
+  end
+
+  desc "Build a debug APK"
+  lane :debug do
+    gradle(task: "clean assembleDebug") # https://developer.android.com/studio/build/building-cmdline#DebugMode
+  end
+
+  # Runs after all tasks. This block is called only when the executed lane is successful
+  after_all do |lane|
+    # Slack action
+    slack(
+      message: "Slack Message Delivered Successfully"
+    )
+  end
+
+  error do |lane, exception|
+    slack(
+      message: exception.message,
+      success: false
+      )
+  end
+
+  desc "Build a signed release APK & deploy to slack"
+    lane :slack_apk_build do
+      gradle(
+        task: "assemble",
+        build_type: "Release",
+        print_command: false,
+        properties: {
+          "android.injected.signing.store.file" => "keystore.jks",
+          "android.injected.signing.store.password" => "store_password",
+          "android.injected.signing.key.alias" => "key_alias",
+          "android.injected.signing.key.password" => "key_password",
+        }
+      )
   end
 end
