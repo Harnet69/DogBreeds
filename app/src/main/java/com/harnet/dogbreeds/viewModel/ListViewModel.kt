@@ -61,6 +61,7 @@ class ListViewModel : ViewModel() {
         //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
         // set loading flag to true
         loading.value = true
+
         disposable.add(
             // set it to a different thread(passing this call to the background thread)
             dogsService.getDogs()
