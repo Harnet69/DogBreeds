@@ -71,6 +71,7 @@ class ListViewModel : ViewModel() {
                 .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>() {
                     // get list of DogBreed objects
                     override fun onSuccess(dogsList: List<DogBreed>) {
+                        //TODO store this information and time of retrieveng in a db as a cache
                         // set received list to observable mutable list
                         dogs.value = dogsList
                         // switch off error message
