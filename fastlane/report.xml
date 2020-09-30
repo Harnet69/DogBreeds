@@ -5,37 +5,37 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000485175">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000452022">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: assembleRelease" time="4.925129033">
+      <testcase classname="fastlane.lanes" name="1: assembleRelease" time="6.254591248">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: Switch to android upload_to_slack lane" time="0.000280261">
+      <testcase classname="fastlane.lanes" name="2: Switch to android upload_to_slack lane" time="0.000287567">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: echo Uploading app-release.apk to Slack" time="0.001308818">
+      <testcase classname="fastlane.lanes" name="3: echo Uploading app-release.apk to Slack" time="0.001370345">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: curl https://slack.com/api/files.upload -F token=&quot;xoxb-1394444862738-1379726078471-kzROzPufsRz6vLxYQmRunaAV&quot; -F channels=&quot;qa_team&quot; -F title=&quot;app-release.apk&quot; -F filename=&quot;app-release.apk&quot; -F file=@/home/harnet/AndroidStudioProjects/Kotlin/Dogbreeds/app/build/outputs/apk/release/app-release.apk" time="1.923932842">
+      <testcase classname="fastlane.lanes" name="4: curl https://slack.com/api/files.upload -F token=&quot;xoxb-1394444862738-1379726078471-wWgxmcIbXRsqEHeHHMefIIHz&quot; -F channels=&quot;general&quot; -F title=&quot;app-release.apk&quot; -F filename=&quot;app-release.apk&quot; -F file=@/home/harnet/AndroidStudioProjects/Kotlin/Dogbreeds/app/build/outputs/apk/release/app-release.apk" time="1.93838066">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="5: slack" time="0.350985803">
+      <testcase classname="fastlane.lanes" name="5: slack" time="0.383114736">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="6: slack" time="0.459968048">
+      <testcase classname="fastlane.lanes" name="6: slack" time="0.362466098">
         
       </testcase>
     

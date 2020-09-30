@@ -16,9 +16,9 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## Android
-### android debug
+### android debug_build
 ```
-fastlane android debug
+fastlane android debug_build
 ```
 Build a debug APK
 ### android slack_apk_build
