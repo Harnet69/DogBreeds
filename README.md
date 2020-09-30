@@ -4,6 +4,15 @@ Android application for introducing with dog breeds and showing the breed detail
 ## Application screenshots:
 ![Game process](https://github.com/Harnet69/DogBreeds/blob/master/app/GitHubMediaFile/dog_breeds.gif)
 
+## Application installation:
+- download app from [Google Play](https://play.google.com/store/apps/details?id=com.harnet.dogbreeds) or scan this QR code by your Android phone
+![Game process](https://github.com/Harnet69/Location/blob/master/app/GitHubMediaFile/DogBreedsQR.png)
+- download .apk [Dog breeds v.1.0 installer](https://drive.google.com/file/d/13ZXZO4C31WNDmkWBKCjSDuo11xITwVuz/view?usp=sharing) and run it on Android phone
+- clone a project code from this repo to your computer, and run it via Android studio or another Android emulator
+
+## Application pdf presentation: 
+[Dog breeds presentation](https://drive.google.com/file/d/1L-hkecVw8j1RB5upHoxr3FdjqQYzyjHS/view?usp=sharing)
+
 ## Technologies:
 ### Implemented:
 - AndroidX (Google repository extension library. Includes JetPack too. All new projects after SDK28 must be on this)
