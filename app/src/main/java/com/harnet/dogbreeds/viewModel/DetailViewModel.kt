@@ -13,6 +13,5 @@ class DetailViewModel: ViewModel() {
     // attach mock dog to dogLiveData
         val dog = DogBreed(dogId, dogName, dogLifeSpan, dogBreedGroup, dogBredFor, dogTemperament, dogImagURL)
         dogLiveData.value = dog
-        println(dog)
     }
 }
