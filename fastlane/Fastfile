@@ -36,7 +36,7 @@ platform :android do
     file_path = lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
     file_name = file_path.gsub(/\/.*\//,"")
     access_token = ENV["ACCESS_TOKEN"]
-    channel_name = "general"
+    channel_name = "qa_team"
 
     sh "echo Uploading " + file_name + " to Slack"
     sh "curl https://slack.com/api/files.upload -F token=\"" + access_token + "\" -F channels=\"" + channel_name + "\" -F title=\"" + file_name + "\" -F filename=\"" + file_name + "\" -F file=@" + file_path
