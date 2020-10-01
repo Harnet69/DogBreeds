@@ -1,6 +1,7 @@
 package com.harnet.dogbreeds.view
 
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,6 +73,7 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
 
     // load image with own ImageLoader
     private fun loadImageByOwnImageLoader(holder: DogViewHolder, position: Int) {
+        Log.i("Coroutiness", "loadImageByOwnImageLoader: ")
         holder.view.dogImage_ImageView.drawable.let {
             val imageController = OwnImageManager()
             CompletableFuture.supplyAsync {

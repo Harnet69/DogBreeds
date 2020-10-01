@@ -42,6 +42,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
 
     // fetches data with OWN API PARSER from remote API
     private fun fetchFromRemoteWithOwnParser() {
+        Log.i("Coroutiness", "fetchFromRemoteWithOwnParser: ")
         //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
         val ownDataParser = OwnDataParser()
         // set loading flag to true

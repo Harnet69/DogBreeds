@@ -8,8 +8,8 @@ class OwnImageManager {
 
     fun getImageByLink(imageLink: String?): Bitmap? {
         return try {
-            val img = imageDownloader.execute(imageLink).get()!!
-            imageDownloader.cancel(true) // close a thread
+            val img = imageDownloader.doInBackground(imageLink)
+//            imageDownloader.cancel(true) // close a thread
             img
         } catch (e: ExecutionException) {
             e.printStackTrace()
