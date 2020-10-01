@@ -46,20 +46,14 @@ class ListViewModel : ViewModel() {
 
         CompletableFuture.supplyAsync { ownDataParser.parseDataFromJSONStr() }
             .thenAccept { dogsList ->
-                // set received list to observable mutable list
-                dogs.postValue(dogsList)
-                // switch off error message
-                dogsLoadError.postValue(false)
-                // switch off waiting spinner
-                loading.postValue(false)
-                Log.i("APIparser", "onSuccess: fetchFromRemoteWithOwnParser")
+                retrieveDogs(dogsList)
             }
     }
 
     // fetches data with Retrofit library from remote API
     private fun fetchFromRemoteWithRetrofit() {
         //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
-        // set loading flag to true
+        //set loading flag to true
         loading.value = true
 
         disposable.add(
@@ -73,13 +67,7 @@ class ListViewModel : ViewModel() {
                     // get list of DogBreed objects
                     override fun onSuccess(dogsList: List<DogBreed>) {
                         //TODO store this information and time of retrieving in a db as a cache
-                        // set received list to observable mutable list
-                        dogs.postValue(dogsList)
-                        // switch off error message
-                        dogsLoadError.postValue(false)
-                        // switch off waiting spinner
-                        loading.postValue(false)
-                        Log.i("APIparser", "onSuccess: fetchFromRemoteWithRetrofit")
+                        retrieveDogs(dogsList)
                     }
 
                     // get an error
@@ -93,7 +81,15 @@ class ListViewModel : ViewModel() {
         )
     }
 
-    // re
+    // retrieve dogs and set UI components
+    private fun retrieveDogs(dogsList: List<DogBreed>){
+        // set received list to observable mutable list
+        dogs.postValue(dogsList)
+        // switch off error message
+        dogsLoadError.postValue(false)
+        // switch off waiting spinner
+        loading.postValue(false)
+    }
 
     override fun onCleared() {
         super.onCleared()

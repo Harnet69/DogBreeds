@@ -7,6 +7,7 @@ import org.json.JSONObject
 import java.util.concurrent.ExecutionException
 
 class OwnDataParser {
+    private val API_URL = "https://raw.githubusercontent.com/DevTides/DogsApi/master/dogs.json"
 
     fun parseDataFromJSONStr(): MutableList<DogBreed> {
         val dogs = mutableListOf<DogBreed>()
@@ -14,7 +15,7 @@ class OwnDataParser {
 
         // get data from API Json file
         try {
-            content = OwnDataDownloader().execute("https://raw.githubusercontent.com/DevTides/DogsApi/master/dogs.json").get()
+            content = OwnDataDownloader().execute(API_URL).get()
         } catch (e: InterruptedException) {
             e.printStackTrace()
         } catch (e: ExecutionException) {
@@ -35,7 +36,6 @@ class OwnDataParser {
 
             // create and an object to its list
             dogs.add(DogBreed(id, name, lifeSpan, breedGroup, bredFor, temperament, url))
-//            println("$id $name $lifeSpan $breedGroup $bredFor $temperament $url")
         }
         return dogs
     }
