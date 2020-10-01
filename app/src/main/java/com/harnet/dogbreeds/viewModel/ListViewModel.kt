@@ -67,6 +67,7 @@ class ListViewModel : ViewModel() {
                     // get list of DogBreed objects
                     override fun onSuccess(dogsList: List<DogBreed>) {
                         //TODO store this information and time of retrieving in a db as a cache
+                        storeDogInDatabase(dogsList)
                         retrieveDogs(dogsList)
                     }
 
@@ -82,13 +83,17 @@ class ListViewModel : ViewModel() {
     }
 
     // retrieve dogs and set UI components
-    private fun retrieveDogs(dogsList: List<DogBreed>){
+    private fun retrieveDogs(dogsList: List<DogBreed>) {
         // set received list to observable mutable list
         dogs.postValue(dogsList)
         // switch off error message
         dogsLoadError.postValue(false)
         // switch off waiting spinner
         loading.postValue(false)
+    }
+
+    private fun storeDogInDatabase(dogsList: List<DogBreed>){
+
     }
 
     override fun onCleared() {
