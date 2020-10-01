@@ -3,7 +3,6 @@ package com.harnet.dogbreeds.model
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import java.sql.RowId
 
 @Dao
 interface DogDAO {

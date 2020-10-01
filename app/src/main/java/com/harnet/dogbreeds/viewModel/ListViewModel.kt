@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.harnet.dogbreeds.model.DogBreed
 import com.harnet.dogbreeds.model.DogsApiService
-import com.harnet.dogbreeds.util.OwnDataDownloader
 import com.harnet.dogbreeds.util.OwnDataParser
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -15,7 +14,7 @@ import java.util.concurrent.CompletableFuture
 
 class ListViewModel : ViewModel() {
     // instantiate DogsApiService
-    private val dogsService = DogsApiService()
+    private val dogsApiService = DogsApiService()
 
     // allows observe observable Single<List<DogBreed>>, handle retrieving and avoid memory leaks
     // (can be produced because of waiting for observable while app has been destroyed)
@@ -46,13 +45,14 @@ class ListViewModel : ViewModel() {
         loading.value = true
 
         CompletableFuture.supplyAsync { ownDataParser.parseDataFromJSONStr() }
-            .thenAccept {dogsFromAPI ->
+            .thenAccept { dogsList ->
                 // set received list to observable mutable list
-                dogs.postValue(dogsFromAPI)
+                dogs.postValue(dogsList)
                 // switch off error message
                 dogsLoadError.postValue(false)
                 // switch off waiting spinner
                 loading.postValue(false)
+                Log.i("APIparser", "onSuccess: fetchFromRemoteWithOwnParser")
             }
     }
 
@@ -64,7 +64,7 @@ class ListViewModel : ViewModel() {
 
         disposable.add(
             // set it to a different thread(passing this call to the background thread)
-            dogsService.getDogs()
+            dogsApiService.getDogs()
                 .subscribeOn(Schedulers.newThread())
                 // retrieve it from a background to the main thread for displaying
                 .observeOn(AndroidSchedulers.mainThread())
@@ -72,14 +72,16 @@ class ListViewModel : ViewModel() {
                 .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>() {
                     // get list of DogBreed objects
                     override fun onSuccess(dogsList: List<DogBreed>) {
-                        //TODO store this information and time of retrieveng in a db as a cache
+                        //TODO store this information and time of retrieving in a db as a cache
                         // set received list to observable mutable list
-                        dogs.value = dogsList
+                        dogs.postValue(dogsList)
                         // switch off error message
-                        dogsLoadError.value = false
+                        dogsLoadError.postValue(false)
                         // switch off waiting spinner
-                        loading.value = false
+                        loading.postValue(false)
+                        Log.i("APIparser", "onSuccess: fetchFromRemoteWithRetrofit")
                     }
+
                     // get an error
                     override fun onError(e: Throwable) {
                         dogsLoadError.value = true
@@ -90,6 +92,8 @@ class ListViewModel : ViewModel() {
                 })
         )
     }
+
+    // re
 
     override fun onCleared() {
         super.onCleared()
