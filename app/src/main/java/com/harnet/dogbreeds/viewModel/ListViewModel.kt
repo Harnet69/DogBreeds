@@ -1,18 +1,21 @@
 package com.harnet.dogbreeds.viewModel
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.harnet.dogbreeds.model.DogBreed
+import com.harnet.dogbreeds.model.DogDatabase
 import com.harnet.dogbreeds.model.DogsApiService
 import com.harnet.dogbreeds.util.OwnDataParser
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import java.util.concurrent.CompletableFuture
 
-class ListViewModel : ViewModel() {
+class ListViewModel(application: Application) : BaseViewModel(application) {
     // instantiate DogsApiService
     private val dogsApiService = DogsApiService()
 
@@ -46,7 +49,8 @@ class ListViewModel : ViewModel() {
 
         CompletableFuture.supplyAsync { ownDataParser.parseDataFromJSONStr() }
             .thenAccept { dogsList ->
-                retrieveDogs(dogsList)
+                storeDogInDatabase(dogsList)
+//                retrieveDogs(dogsList)
             }
     }
 
@@ -68,7 +72,7 @@ class ListViewModel : ViewModel() {
                     override fun onSuccess(dogsList: List<DogBreed>) {
                         //TODO store this information and time of retrieving in a db as a cache
                         storeDogInDatabase(dogsList)
-                        retrieveDogs(dogsList)
+//                        retrieveDogs(dogsList)
                     }
 
                     // get an error
@@ -82,7 +86,7 @@ class ListViewModel : ViewModel() {
         )
     }
 
-    // retrieve dogs and set UI components
+    // retrieve dogs and set UI components. Can work separately from DB
     private fun retrieveDogs(dogsList: List<DogBreed>) {
         // set received list to observable mutable list
         dogs.postValue(dogsList)
@@ -92,8 +96,21 @@ class ListViewModel : ViewModel() {
         loading.postValue(false)
     }
 
+    // initiate and handle data in database
     private fun storeDogInDatabase(dogsList: List<DogBreed>){
-
+        //launch code in separate thread in Coroutine scope
+        launch {
+            val dao = DogDatabase(getApplication()).dogDAO()
+            dao.deleteAllDogs()
+            // argument is an expanded list of individual elements
+            val result = dao.insertAll(*dogsList.toTypedArray())
+            // update receiver list with assigning uuId to the right objects
+            //TODO can be a cause of a problem, because of for loop instead while
+            for(i in dogsList.indices){
+                dogsList[i].uuid = result[i].toInt()
+            }
+            retrieveDogs(dogsList)
+        }
     }
 
     override fun onCleared() {

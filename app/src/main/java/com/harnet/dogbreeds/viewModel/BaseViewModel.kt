@@ -14,7 +14,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
-    // when BaseViewModel cleares
+    // when BaseViewModel clears
     override fun onCleared() {
         super.onCleared()
         job.cancel()
