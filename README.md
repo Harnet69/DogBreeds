@@ -5,7 +5,7 @@ Android application for introducing with dog breeds and showing the breed detail
 ![Game process](https://github.com/Harnet69/DogBreeds/blob/master/app/GitHubMediaFile/dog_breeds.gif)
 
 ## Application installation:
-- download app from [Google Play](https://play.google.com/store/apps/details?id=com.harnet.dogbreeds) (doesn't revieved yet) or scan this QR code by your Android phone
+- download app from [Google Play](https://play.google.com/store/apps/details?id=com.harnet.dogbreeds) or scan this QR code by your Android phone
 ![Game process](https://github.com/Harnet69/DogBreeds/blob/master/app/GitHubMediaFile/dog_breeds_QR.png)
 - download .apk [Dog breeds v.1.0 installer](https://drive.google.com/file/d/13ZXZO4C31WNDmkWBKCjSDuo11xITwVuz/view?usp=sharing) and run it on Android phone
 - clone a project code from this repo to your computer, and run it via Android studio or another Android emulator
@@ -25,7 +25,7 @@ Android application for introducing with dog breeds and showing the breed detail
 - Glide library & OWN REALIZATION for loading and handling app images
 - SonarCloud for monitoring a code quality
 - Fastlane as Android Build and Release Process automation(partly implemented)
-- Room database for storing data, which was got from backend API, and when the screen will be updates - data will get from the database (partly implemented)
+- Room database for storing data, which was got from backend API, and when the screen will be updates - data will get from the database
 ### In progress:
 - Palette Library for managing background of details page
 - dataBinding library to map information from backend to interfaces(screen layouts: detail screen will be binding to item of recycler view)
