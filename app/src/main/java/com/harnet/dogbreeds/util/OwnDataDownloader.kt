@@ -1,13 +1,14 @@
 package com.harnet.dogbreeds.util
 
+import android.app.Application
 import android.os.AsyncTask
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
-class OwnDataDownloader : AsyncTask<String?, Void?, String?>() {
-    override fun doInBackground(vararg urls: String?): String? {
+class OwnDataDownloader: BaseParser() {
+    fun doInBackground(vararg urls: String?): String? {
         val site = StringBuilder()
         try {
             val url = URL(urls[0])
@@ -26,5 +27,4 @@ class OwnDataDownloader : AsyncTask<String?, Void?, String?>() {
         }
         return site.toString()
     }
-
 }

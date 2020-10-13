@@ -42,6 +42,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
 
     // fetches data with OWN API PARSER from remote API
     private fun fetchFromRemoteWithOwnParser() {
+        Log.i("Coroutiness", "fetchFromRemoteWithOwnParser: ")
         //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
         val ownDataParser = OwnDataParser()
         // set loading flag to true
@@ -97,7 +98,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
     }
 
     // initiate and handle data in database
-    private fun storeDogInDatabase(dogsList: List<DogBreed>){
+    private fun storeDogInDatabase(dogsList: List<DogBreed>) {
         //launch code in separate thread in Coroutine scope
         launch {
             val dao = DogDatabase(getApplication()).dogDAO()
@@ -106,7 +107,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
             val result = dao.insertAll(*dogsList.toTypedArray())
             // update receiver list with assigning uuId to the right objects
             //TODO can be a cause of a problem, because of for loop instead while
-            for(i in dogsList.indices){
+            for (i in dogsList.indices) {
                 dogsList[i].uuid = result[i].toInt()
             }
             retrieveDogs(dogsList)

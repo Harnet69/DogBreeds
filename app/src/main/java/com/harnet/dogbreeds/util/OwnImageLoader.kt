@@ -4,14 +4,15 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
 import com.harnet.dogbreeds.BuildConfig
+import kotlinx.coroutines.CoroutineScope
 import java.net.HttpURLConnection
 import java.net.URL
 
-class OwnImageLoader : AsyncTask<String?, Void?, Bitmap?>() {
+class OwnImageLoader : BaseParser() {
     private var myBitmap: Bitmap? = null
 
     // the method return an image asynchronicity
-    override fun doInBackground(vararg urls: String?): Bitmap? {
+    fun doInBackground(vararg urls: String?): Bitmap? {
         myBitmap = manageImageInputStream(urls as Array<String>) // can be a cause of a crash
         return myBitmap
     }
