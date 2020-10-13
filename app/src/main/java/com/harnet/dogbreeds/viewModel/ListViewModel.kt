@@ -2,8 +2,8 @@ package com.harnet.dogbreeds.viewModel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.harnet.dogbreeds.model.DogBreed
 import com.harnet.dogbreeds.model.DogDatabase
 import com.harnet.dogbreeds.model.DogsApiService
@@ -24,20 +24,28 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
     private val disposable = CompositeDisposable()
 
     // provide an info of actual list of dogs what we retrieve from data source
-    val dogs = MutableLiveData<List<DogBreed>>()
+    val mDogs = MutableLiveData<List<DogBreed>>()
 
     //notify about generic error with data's retrieval because it listens the ViewModel
-    val dogsLoadError = MutableLiveData<Boolean>()
+    val mDogsLoadError = MutableLiveData<Boolean>()
 
     // listening is data loading
-    val loading = MutableLiveData<Boolean>()
+    val mLoading = MutableLiveData<Boolean>()
 
     //TODO make a switcher for switch between two approaches of API fetching
 
-    //refresh information from remote or local sources
-    fun refresh() {
+    //refresh information from remote API
+    fun refreshFromAPI() {
         fetchFromRemoteWithRetrofit()
 //        fetchFromRemoteWithOwnParser()
+        Toast.makeText(getApplication(), "API data", Toast.LENGTH_SHORT).show()
+    }
+
+    //refresh information from a database
+    fun refreshFromDatabase() {
+        fetchFromDatabase()
+//        fetchFromRemoteWithOwnParser()
+        Toast.makeText(getApplication(), "Database data", Toast.LENGTH_SHORT).show()
     }
 
     // fetches data with OWN API PARSER from remote API
@@ -46,7 +54,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
         //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
         val ownDataParser = OwnDataParser()
         // set loading flag to true
-        loading.value = true
+        mLoading.value = true
 
         CompletableFuture.supplyAsync { ownDataParser.parseDataFromJSONStr() }
             .thenAccept { dogsList ->
@@ -59,7 +67,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
     private fun fetchFromRemoteWithRetrofit() {
         //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
         //set loading flag to true
-        loading.value = true
+        mLoading.value = true
 
         disposable.add(
             // set it to a different thread(passing this call to the background thread)
@@ -78,8 +86,8 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
 
                     // get an error
                     override fun onError(e: Throwable) {
-                        dogsLoadError.value = true
-                        loading.value = false
+                        mDogsLoadError.value = true
+                        mLoading.value = false
                         // print stack of error to handling it
                         e.printStackTrace()
                     }
@@ -90,11 +98,11 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
     // retrieve dogs and set UI components. Can work separately from DB
     private fun retrieveDogs(dogsList: List<DogBreed>) {
         // set received list to observable mutable list
-        dogs.postValue(dogsList)
+        mDogs.postValue(dogsList)
         // switch off error message
-        dogsLoadError.postValue(false)
+        mDogsLoadError.postValue(false)
         // switch off waiting spinner
-        loading.postValue(false)
+        mLoading.postValue(false)
     }
 
     // initiate and handle data in database
@@ -111,6 +119,14 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
                 dogsList[i].uuid = result[i].toInt()
             }
             retrieveDogs(dogsList)
+        }
+    }
+
+    // get data from dogs database
+    private fun fetchFromDatabase(){
+        launch {
+            val dogsFromDb = DogDatabase.invoke(getApplication()).dogDAO().getAllDogs()
+            retrieveDogs(dogsFromDb)
         }
     }
 
