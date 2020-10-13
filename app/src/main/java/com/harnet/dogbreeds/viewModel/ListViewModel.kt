@@ -39,19 +39,18 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
     fun refreshFromAPI() {
         fetchFromRemoteWithRetrofit()
 //        fetchFromRemoteWithOwnParser()
-        Toast.makeText(getApplication(), "API data", Toast.LENGTH_SHORT).show()
+        Toast.makeText(getApplication(), "Get data from API", Toast.LENGTH_SHORT).show()
     }
 
     //refresh information from a database
     fun refreshFromDatabase() {
         fetchFromDatabase()
 //        fetchFromRemoteWithOwnParser()
-        Toast.makeText(getApplication(), "Database data", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(getApplication(), "Database data", Toast.LENGTH_SHORT).show()
     }
 
     // fetches data with OWN API PARSER from remote API
     private fun fetchFromRemoteWithOwnParser() {
-        Log.i("Coroutiness", "fetchFromRemoteWithOwnParser: ")
         //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
         val ownDataParser = OwnDataParser()
         // set loading flag to true
@@ -80,7 +79,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
                 .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>() {
                     // get list of DogBreed objects
                     override fun onSuccess(dogsList: List<DogBreed>) {
-                        //TODO store this information and time of retrieving in a db as a cache
+                        //store this information and time of retrieving in a db as a cache
                         storeDogInDatabase(dogsList)
                         SharedPreferencesHelper.invoke(getApplication()).saveTimeOfUpd(System.nanoTime())
                     }
@@ -115,7 +114,6 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
             // argument is an expanded list of individual elements
             val result = dao.insertAll(*dogsList.toTypedArray())
             // update receiver list with assigning uuId to the right objects
-            //TODO can be a cause of a problem, because of for loop instead while
             for (i in dogsList.indices) {
                 dogsList[i].uuid = result[i].toInt()
             }

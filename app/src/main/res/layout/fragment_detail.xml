@@ -13,15 +13,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:src="@android:drawable/btn_star"
             android:scaleType="fitCenter"
-            android:minHeight="250dp"/>
+            android:minHeight="250dp"
+            android:contentDescription="@string/breed_image" />
         <TextView
             android:id="@+id/dogIdDetail_TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/dogImageDetail_ImageView"
-            android:text="id"
             style="@style/Title"
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"/>
@@ -30,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/dogIdDetail_TextView"
-            android:text="Name"
             style="@style/Title"
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"/>
@@ -39,7 +37,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/dogNameDetail_TextView"
-            android:text="Purpose"
             style="@style/Text"
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"/>
@@ -48,7 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/dogPurposeDetail_TextView"
-            android:text="Temperament"
             style="@style/Text"
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"/>
@@ -58,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/dogTemperamentDetail_TextView"
-            android:text="Lifespan"
             style="@style/Text"
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"/>
