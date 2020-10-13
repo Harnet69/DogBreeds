@@ -7,7 +7,7 @@ import com.harnet.dogbreeds.model.DogBreed
 class DetailViewModel: ViewModel() {
     val dogLiveData = MutableLiveData<DogBreed>()
 
-    //retrieve data from database by agrument's id
+    //retrieve data from database by agrument id
     //TODO there will be id as argument for retrieveng dog data from a database
     fun fetch(dogId: String, dogName: String, dogLifeSpan: String, dogBreedGroup: String, dogBredFor: String, dogTemperament: String, dogImagURL: String){
     // attach mock dog to dogLiveData
