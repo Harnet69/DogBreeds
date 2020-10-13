@@ -1,6 +1,7 @@
 package com.harnet.dogbreeds.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,13 +19,6 @@ import kotlinx.android.synthetic.main.fragment_list.*
 
 class DetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
-    lateinit var dogId: String
-    lateinit var dogName: String
-    lateinit var dogLifeSpan: String
-    lateinit var dogBreedGroup: String
-    lateinit var dogBredFor: String
-    lateinit var dogTemperament: String
-    lateinit var dogImagURL: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,27 +35,22 @@ class DetailFragment : Fragment() {
 
         // receive arguments from sending fragment
         arguments?.let {
-            dogId = DetailFragmentArgs.fromBundle(it).dogId
-            dogName = DetailFragmentArgs.fromBundle(it).dogName
-            dogLifeSpan = DetailFragmentArgs.fromBundle(it).dogLifeSpan
-            dogBreedGroup = DetailFragmentArgs.fromBundle(it).dogBreedGroup
-            dogBredFor = DetailFragmentArgs.fromBundle(it).dogBredFor
-            dogTemperament = DetailFragmentArgs.fromBundle(it).dogTemperament
-            dogImagURL = DetailFragmentArgs.fromBundle(it).dogImagURL
+            val dogId = DetailFragmentArgs.fromBundle(it).dogId
             //Retrieve a data from DetailViewModel
             //TODO send a dog id as argument
-            viewModel.fetch(dogId, dogName, dogLifeSpan, dogBreedGroup, dogBredFor, dogTemperament, dogImagURL)
+            viewModel.fetch(dogId)
 
         }
         observeViewModel()
     }
 
-    private fun observeViewModel(){
-        viewModel.dogLiveData.observe(this, Observer {dog ->
+    private fun observeViewModel() {
+        viewModel.dogLiveData.observe(this, Observer { dog ->
             // if dog isn't null
             dog?.let {
                 context?.let { it1 -> getProgressDrawable(it1) }?.let { it2 ->
-                    dogImageDetail_ImageView.loadImage(dogImagURL,
+                    dogImageDetail_ImageView.loadImage(
+                        dog.imageURL,
                         it2
                     )
                 }

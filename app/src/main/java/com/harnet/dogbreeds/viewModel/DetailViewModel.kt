@@ -1,17 +1,22 @@
 package com.harnet.dogbreeds.viewModel
 
+import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.harnet.dogbreeds.model.DogBreed
+import com.harnet.dogbreeds.model.DogDatabase
+import kotlinx.coroutines.launch
 
-class DetailViewModel: ViewModel() {
+class DetailViewModel(application: Application) : BaseViewModel(application) {
     val dogLiveData = MutableLiveData<DogBreed>()
 
     //retrieve data from database by agrument id
-    //TODO there will be id as argument for retrieveng dog data from a database
-    fun fetch(dogId: String, dogName: String, dogLifeSpan: String, dogBreedGroup: String, dogBredFor: String, dogTemperament: String, dogImagURL: String){
-    // attach mock dog to dogLiveData
-        val dog = DogBreed(dogId, dogName, dogLifeSpan, dogBreedGroup, dogBredFor, dogTemperament, dogImagURL)
-        dogLiveData.value = dog
+    fun fetch(dogId: String) {
+        //get dog data from a database
+        launch {
+            val dog = DogDatabase.invoke(getApplication()).dogDAO().getDog(dogId)
+//            Log.i("DogDescription", "fetch: " + dog)
+            dogLiveData.setValue(dog)
+        }
     }
 }
