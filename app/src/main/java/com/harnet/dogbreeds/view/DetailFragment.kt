@@ -1,21 +1,17 @@
 package com.harnet.dogbreeds.view
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.util.getProgressDrawable
 import com.harnet.dogbreeds.util.loadImage
 import com.harnet.dogbreeds.viewModel.DetailViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
-import kotlinx.android.synthetic.main.fragment_list.*
 
 class DetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel

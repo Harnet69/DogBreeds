@@ -15,7 +15,7 @@
             android:layout_alignParentTop="true"
             android:src="@android:drawable/btn_star"
             android:scaleType="fitCenter"
-            android:minHeight="200dp"/>
+            android:minHeight="250dp"/>
         <TextView
             android:id="@+id/dogIdDetail_TextView"
             android:layout_width="wrap_content"

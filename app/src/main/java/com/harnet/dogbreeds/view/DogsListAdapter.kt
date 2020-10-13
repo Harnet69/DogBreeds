@@ -58,12 +58,6 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
             val action = ListFragmentDirections.actionDetailFragment()
             // send dog id to DetailFragment
             action.dogId = dogsList[position].breedId.toString()
-            action.dogName = dogsList[position].dogBreed.toString()
-            action.dogLifeSpan = dogsList[position].lifespan.toString()
-            action.dogBreedGroup = dogsList[position].breedGrupp.toString()
-            action.dogBredFor = dogsList[position].bredFor.toString()
-            action.dogTemperament = dogsList[position].temperament.toString()
-            action.dogImagURL = dogsList[position].imageURL.toString()
 
             Navigation.findNavController(it).navigate(action)
         }

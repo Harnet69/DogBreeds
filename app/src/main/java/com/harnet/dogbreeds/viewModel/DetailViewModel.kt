@@ -1,7 +1,6 @@
 package com.harnet.dogbreeds.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.harnet.dogbreeds.model.DogBreed
 import com.harnet.dogbreeds.model.DogDatabase
@@ -15,7 +14,6 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
         //get dog data from a database
         launch {
             val dog = DogDatabase.invoke(getApplication()).dogDAO().getDog(dogId)
-//            Log.i("DogDescription", "fetch: " + dog)
             dogLiveData.setValue(dog)
         }
     }
