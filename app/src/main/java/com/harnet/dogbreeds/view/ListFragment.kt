@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.dogbreeds.R
+import com.harnet.dogbreeds.util.SharedPreferencesHelper
 import com.harnet.dogbreeds.viewModel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
 
@@ -29,8 +30,14 @@ class ListFragment : Fragment() {
 
         //instantiate view model inside the fragment
         viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
+
+        // handle with cache
+        if(context?.let { SharedPreferencesHelper.invoke(it).getLastUpdateTime()?.equals(0L) }!!){
         //initiating observable variables
-        viewModel.refreshFromAPI()
+            viewModel.refreshFromAPI()
+        }else{
+            viewModel.refreshFromDatabase()
+        }
 
         // RecycleView applying
         dogsList_RecyclerView.apply {

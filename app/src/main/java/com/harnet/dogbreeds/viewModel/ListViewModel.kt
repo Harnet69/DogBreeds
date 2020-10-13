@@ -8,6 +8,7 @@ import com.harnet.dogbreeds.model.DogBreed
 import com.harnet.dogbreeds.model.DogDatabase
 import com.harnet.dogbreeds.model.DogsApiService
 import com.harnet.dogbreeds.util.OwnDataParser
+import com.harnet.dogbreeds.util.SharedPreferencesHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -81,7 +82,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
                     override fun onSuccess(dogsList: List<DogBreed>) {
                         //TODO store this information and time of retrieving in a db as a cache
                         storeDogInDatabase(dogsList)
-//                        retrieveDogs(dogsList)
+                        SharedPreferencesHelper.invoke(getApplication()).saveTimeOfUpd(System.nanoTime())
                     }
 
                     // get an error
