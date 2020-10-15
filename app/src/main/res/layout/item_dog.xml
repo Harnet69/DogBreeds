@@ -15,6 +15,7 @@
 
         <ImageView
             android:id="@+id/dogImage_ImageView"
+            android:bindImageUrl="@{dog.imageURL}"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
