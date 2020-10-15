@@ -13,6 +13,7 @@
         android:layout_height="125dp"
         android:orientation="horizontal">
 
+        <!--android:bindImageUrlByOwnParser="@{dog.imageURL}"-->
         <ImageView
             android:id="@+id/dogImage_ImageView"
             android:bindImageUrl="@{dog.imageURL}"

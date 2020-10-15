@@ -37,6 +37,7 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
     override fun getItemCount() = dogsList.size
 
     override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
+        // bind the dog object to ImageView from xml file
         holder.view.dog = dogsList[position]
 //        holder.view.dogImage_ImageView.setImageResource(R.mipmap.ic_dog_ico)
 //        //attach view to information from a list
@@ -67,7 +68,7 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
 
     class DogViewHolder(var view: ItemDogBinding) : RecyclerView.ViewHolder(view.root)
 
-    // load image with own ImageLoader
+//    // load image with own ImageLoader(implemented in Utils for DataBinding usage)
 //    private fun loadImageByOwnImageLoader(holder: DogViewHolder, position: Int) {
 //        holder.view.dogImage_ImageView.drawable.let {
 //            val imageController = OwnImageManager()
