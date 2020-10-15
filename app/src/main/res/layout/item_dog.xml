@@ -2,6 +2,12 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="dog"
+            type="com.harnet.dogbreeds.model.DogBreed" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="125dp"
@@ -24,11 +30,13 @@
             <TextView
                 android:id="@+id/dogName_LinearLayout"
                 style="@style/Title"
+                android:text="@{dog.dogBreed}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/dogLifespan"
                 style="@style/Text"
+                android:text="@{dog.lifespan}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
