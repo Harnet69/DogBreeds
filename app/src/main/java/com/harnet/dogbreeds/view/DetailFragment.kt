@@ -48,17 +48,6 @@ class DetailFragment : Fragment() {
         viewModel.dogLiveData.observe(this, Observer { dog ->
             // if dog isn't null
             dog?.let {
-//                context?.let { it1 -> getProgressDrawable(it1) }?.let { it2 ->
-//                    dogImageDetail_ImageView.loadImage(
-//                        dog.imageURL,
-//                        it2
-//                    )
-//                }
-//                dogIdDetail_TextView.text = dog.breedId
-//                dogNameDetail_TextView.text = dog.dogBreed
-//                dogPurposeDetail_TextView.text = dog.bredFor
-//                dogTemperamentDetail_TextView.text = dog.temperament
-//                dogLifespanDetail_TextView.text = dog.lifespan
                 dataBinding.dogObj = dog
             }
         })

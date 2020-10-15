@@ -1,20 +1,12 @@
 package com.harnet.dogbreeds.view
 
-import android.app.Activity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.ItemDogBinding
 import com.harnet.dogbreeds.model.DogBreed
-import com.harnet.dogbreeds.util.OwnImageManager
-import com.harnet.dogbreeds.util.getProgressDrawable
-import com.harnet.dogbreeds.util.loadImage
-import kotlinx.android.synthetic.main.item_dog.view.*
-import java.util.concurrent.CompletableFuture
 
 class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
     RecyclerView.Adapter<DogsListAdapter.DogViewHolder>() {
@@ -68,7 +60,7 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
 
     class DogViewHolder(var view: ItemDogBinding) : RecyclerView.ViewHolder(view.root)
 
-//    // load image with own ImageLoader(implemented in Utils for DataBinding usage)
+    // load image with own ImageLoader(implemented in Utils for DataBinding usage)
 //    private fun loadImageByOwnImageLoader(holder: DogViewHolder, position: Int) {
 //        holder.view.dogImage_ImageView.drawable.let {
 //            val imageController = OwnImageManager()
