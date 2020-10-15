@@ -1,6 +1,7 @@
 package com.harnet.dogbreeds.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,7 +59,7 @@ class DetailFragment : Fragment() {
 //                dogPurposeDetail_TextView.text = dog.bredFor
 //                dogTemperamentDetail_TextView.text = dog.temperament
 //                dogLifespanDetail_TextView.text = dog.lifespan
-                dataBinding.dog = dog
+                dataBinding.dogObj = dog
             }
         })
     }
