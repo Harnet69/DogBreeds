@@ -14,9 +14,8 @@ import com.harnet.dogbreeds.viewModel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment : Fragment() {
-
     private lateinit var viewModel: ListViewModel // viewModel for handling data and views
-    val dogListAdapter = DogsListAdapter(arrayListOf()) // handling with RecycleView
+    private lateinit var dogListAdapter:DogsListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +26,8 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        dogListAdapter = DogsListAdapter(arrayListOf()) // handling with RecycleView
 
         //instantiate view model inside the fragment
         viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
@@ -43,6 +44,8 @@ class ListFragment : Fragment() {
         dogsList_RecyclerView.apply {
             //allows system to order item elements sequentially in a linear fashion from top to bottom
             layoutManager = LinearLayoutManager(context)
+            //Fix blinking RecyclerView
+            dogListAdapter.setHasStableIds(true)
             // attach an adapter
             adapter = dogListAdapter
         }

@@ -75,4 +75,9 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
 //                }
 //        }
 //    }
+
+    //Fix blinking RecyclerView
+    override fun getItemId(position: Int): Long {
+        return dogsList.get(position).uuid.toLong()
+    }
 }
