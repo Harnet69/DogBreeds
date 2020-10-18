@@ -75,7 +75,7 @@ class DetailFragment : Fragment() {
                     Palette.from(resource)
                         .generate {palette->
                             //extract color. If rgb is null intColor = 0
-                            val intColor = palette?.vibrantSwatch?.rgb ?: 0
+                            val intColor = palette?.lightMutedSwatch?.rgb ?: 0
                             //create an object of Palette
                             val articlePalette = DogPalette(intColor)
                             //bind object to View xml

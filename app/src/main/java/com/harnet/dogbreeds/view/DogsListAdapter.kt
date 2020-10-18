@@ -1,15 +1,26 @@
 package com.harnet.dogbreeds.view
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.ItemDogBinding
 import com.harnet.dogbreeds.model.DogBreed
+import com.harnet.dogbreeds.model.DogPalette
 
 class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
     RecyclerView.Adapter<DogsListAdapter.DogViewHolder>() {
+    private lateinit var dataBinding: ItemDogBinding
+
     //for updating information from a backend
     fun updateDogList(newDogsList: List<DogBreed>) {
         dogsList.clear()
@@ -21,8 +32,8 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
         val inflator = LayoutInflater.from(parent.context)
         // elements of the list transformed into views
-//        val view = inflator.inflate(R.layout.item_dog, parent, false)
-        val view = DataBindingUtil.inflate<ItemDogBinding>(inflator,R.layout.item_dog, parent, false)
+        val view =
+            DataBindingUtil.inflate<ItemDogBinding>(inflator, R.layout.item_dog, parent, false)
         return DogViewHolder(view)
     }
 
@@ -31,6 +42,10 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
     override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
         // bind the dog object to ImageView from xml file
         holder.view.dog = dogsList[position]
+        // set image to Palette
+        dogsList[position].imageURL?.let { url ->
+            setupBackgroundColor(holder, url)
+        }
 //        holder.view.dogImage_ImageView.setImageResource(R.mipmap.ic_dog_ico)
 //        //attach view to information from a list
 //        //TODO make switcher for two approaches of images loading: own and Glide's
@@ -79,5 +94,28 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
     //Fix blinking RecyclerView
     override fun getItemId(position: Int): Long {
         return dogsList.get(position).uuid.toLong()
+    }
+
+    // Palette handler
+    private fun setupBackgroundColor(holder: DogViewHolder, url: String) {
+        Glide.with(holder.view.dogLifespan.context)
+            .asBitmap()
+            .load(url)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    Palette.from(resource)
+                        .generate { palette ->
+                            //extract color. If rgb is null intColor = 0
+                            val intColor = palette?.lightMutedSwatch?.rgb ?: 0
+                            //create an object of Palette
+                            val articlePalette = DogPalette(intColor)
+                            //bind object to View xml
+                            holder.view.palette = articlePalette
+                        }
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                }
+            })
     }
 }

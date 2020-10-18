@@ -6,12 +6,16 @@
         <variable
             name="dog"
             type="com.harnet.dogbreeds.model.DogBreed" />
+        <variable
+            name="palette"
+            type="com.harnet.dogbreeds.model.DogPalette" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="125dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@{palette.color}">
 
         <!--android:bindImageUrlByOwnParser="@{dog.imageURL}"-->
         <ImageView
