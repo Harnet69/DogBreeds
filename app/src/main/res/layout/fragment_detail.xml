@@ -7,12 +7,17 @@
         <variable
             name="dogObj"
             type="com.harnet.dogbreeds.model.DogBreed" />
+        <variable
+            name="palette"
+            type="com.harnet.dogbreeds.model.DogPalette" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.DetailFragment">
+        tools:context=".view.DetailFragment"
+        android:padding="4dp"
+        android:background="@{palette.color}">
 
         <ImageView
             android:id="@+id/dogImageDetail_ImageView"
