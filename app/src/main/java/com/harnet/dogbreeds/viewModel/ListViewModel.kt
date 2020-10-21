@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.harnet.dogbreeds.model.DogBreed
 import com.harnet.dogbreeds.model.DogDatabase
 import com.harnet.dogbreeds.model.DogsApiService
+import com.harnet.dogbreeds.util.NotificationsHelper
 import com.harnet.dogbreeds.util.OwnDataParser
 import com.harnet.dogbreeds.util.SharedPreferencesHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -40,6 +41,8 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
         fetchFromRemoteWithRetrofit()
 //        fetchFromRemoteWithOwnParser()
         Toast.makeText(getApplication(), "Get data from API", Toast.LENGTH_SHORT).show()
+        // notification
+        NotificationsHelper(getApplication()).createNotification()
     }
 
     //refresh information from a database

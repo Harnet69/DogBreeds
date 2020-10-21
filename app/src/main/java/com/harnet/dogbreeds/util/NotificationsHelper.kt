@@ -33,14 +33,14 @@ class NotificationsHelper(val context: Context) {
 
         //create a notification
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.dog_icon)
+            .setSmallIcon(R.drawable.dog_icon)// icon for the notification
             .setLargeIcon(icon)
             .setContentTitle("Get dogs from API")
             .setContentText("Update list of dog breeds")
-                // when the notification was expanded shows large icon and a large image
+                // notification can be expanded and shows a large icon as a large image
             .setStyle(NotificationCompat.BigPictureStyle()
                 .bigPicture(icon)
-                .bigLargeIcon(null)
+                .bigLargeIcon(null) // icon disappears
             )
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
