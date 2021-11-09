@@ -1,7 +1,6 @@
 package com.harnet.dogbreeds.viewModel
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.dogbreeds.model.DogBreed
@@ -10,10 +9,10 @@ import com.harnet.dogbreeds.model.DogsApiService
 import com.harnet.dogbreeds.util.NotificationsHelper
 import com.harnet.dogbreeds.util.OwnDataParser
 import com.harnet.dogbreeds.util.SharedPreferencesHelper
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.launch
 import java.util.concurrent.CompletableFuture
 

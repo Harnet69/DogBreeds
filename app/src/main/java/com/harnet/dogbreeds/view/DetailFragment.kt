@@ -3,7 +3,6 @@ package com.harnet.dogbreeds.view
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +17,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.FragmentDetailBinding
 import com.harnet.dogbreeds.model.DogPalette
-import com.harnet.dogbreeds.util.getProgressDrawable
-import com.harnet.dogbreeds.util.loadImage
 import com.harnet.dogbreeds.viewModel.DetailViewModel
-import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
@@ -52,7 +48,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.dogLiveData.observe(this, Observer { dog ->
+        viewModel.dogLiveData.observe(this, { dog ->
             // if dog isn't null
             dog?.let {
                 dataBinding.dogObj = dog
