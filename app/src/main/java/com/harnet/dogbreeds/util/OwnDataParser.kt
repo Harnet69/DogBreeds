@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutionException
 
 class OwnDataParser {
     private val API_URL = "https://raw.githubusercontent.com/DevTides/DogsApi/master/dogs.json"
-    val ownDataDowloader = OwnDataDownloader()
+    private val ownDataDowloader = OwnDataDownloader()
 
     fun parseDataFromJSONStr(): MutableList<DogBreed> {
         val dogs = mutableListOf<DogBreed>()
