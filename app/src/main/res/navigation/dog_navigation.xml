@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.harnet.dogbreeds.view.ListFragment"
-        android:label="listFragment">
+        android:label="@string/dog_breeds_list_text">
         <action
             android:id="@+id/actionDetailFragment"
             app:destination="@id/detailFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.harnet.dogbreeds.view.DetailFragment"
-        android:label="DetailFragment">
+        android:label="@string/dog_details_text">
         <action
             android:id="@+id/actionListFragment"
             app:destination="@id/listFragment" />

@@ -1,7 +1,10 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: "androidx.navigation.safeargs"
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
+    id 'dagger.hilt.android.plugin'
+}
 
 android {
     compileSdkVersion 31
@@ -53,20 +56,24 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
 
     implementation "com.android.support:design:$supportVersion"
+    implementation "com.android.support:palette-v7:$supportVersion"
 
     implementation "android.arch.lifecycle:extensions:$lifeCycleExtensionVersion"
 
-    // Activity KTX for viewModels()
-    implementation "androidx.activity:activity-ktx:1.4.0"
+    //Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
+
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+    implementation "androidx.preference:preference-ktx:$preferencesVersion"
 
     implementation "com.google.android.material:material:1.4.0"
 
@@ -79,10 +86,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rx2JavaVersion"
 
     implementation "com.github.bumptech.glide:glide:$glideVersion"
-
-    implementation "com.android.support:palette-v7:$supportVersion"
-
-    implementation "androidx.preference:preference-ktx:$preferencesVersion"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
