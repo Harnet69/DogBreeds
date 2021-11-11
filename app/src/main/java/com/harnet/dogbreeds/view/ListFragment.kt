@@ -6,17 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.FragmentListBinding
 import com.harnet.dogbreeds.util.SharedPreferencesHelper
 import com.harnet.dogbreeds.viewModel.ListViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ListFragment : Fragment() {
     private lateinit var viewModel: ListViewModel // viewModel for handling data and views
-    private lateinit var dogListAdapter:DogsListAdapter
+
+    @Inject
+    lateinit var dogListAdapter: DogsListAdapter
 
     private lateinit var dataBinding: FragmentListBinding
 
@@ -24,23 +28,23 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dataBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_list, container, false)
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false)
         return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dogListAdapter = DogsListAdapter(arrayListOf()) // handling with RecycleView
+//        dogListAdapter = DogsListAdapter(arrayListOf()) // handling with RecycleView
 
         //instantiate view model inside the fragment
         viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
 
         // handle with cache
-        if(context?.let { SharedPreferencesHelper.invoke(it).getLastUpdateTime()?.equals(0L) }!!){
-        //initiating observable variables
+        if (context?.let { SharedPreferencesHelper.invoke(it).getLastUpdateTime()?.equals(0L) }!!) {
+            //initiating observable variables
             viewModel.refreshFromAPI()
-        }else{
+        } else {
             viewModel.refreshFromDatabase()
         }
 
@@ -49,7 +53,11 @@ class ListFragment : Fragment() {
             //allows system to order item elements sequentially in a linear fashion from top to bottom
             layoutManager = LinearLayoutManager(context)
             //Fix blinking RecyclerView
-            dogListAdapter.setHasStableIds(true)
+            adapter?.let {
+                if (!it.hasObservers()) {
+                    it.setHasStableIds(true)
+                }
+            }
             // attach an adapter
             adapter = dogListAdapter
         }

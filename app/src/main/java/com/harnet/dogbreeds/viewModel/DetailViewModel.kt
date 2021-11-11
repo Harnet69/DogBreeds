@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 class DetailViewModel(application: Application) : BaseViewModel(application) {
     val dogLiveData = MutableLiveData<DogBreed>()
 
-    //retrieve data from database by agrument id
+    //retrieve data from database by argument id
     fun fetch(dogId: String) {
         //get dog data from a database
         launch {

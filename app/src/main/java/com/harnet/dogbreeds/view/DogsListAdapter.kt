@@ -14,9 +14,11 @@ import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.ItemDogBinding
 import com.harnet.dogbreeds.model.DogBreed
 import com.harnet.dogbreeds.model.DogPalette
+import javax.inject.Inject
 
-class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
+class DogsListAdapter @Inject constructor() :
     RecyclerView.Adapter<DogsListAdapter.DogViewHolder>() {
+    private val dogsList: ArrayList<DogBreed> = arrayListOf()
 
     //for updating information from a backend
     fun updateDogList(newDogsList: List<DogBreed>) {
