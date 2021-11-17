@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.dogbreeds.R
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ListFragment : Fragment() {
-    private lateinit var viewModel: ListViewModel // viewModel for handling data and views
+    // inject viewModel via Hilt
+    private val viewModel: ListViewModel by viewModels()
 
     @Inject
     lateinit var dogListAdapter: DogsListAdapter
@@ -36,9 +38,6 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 //        dogListAdapter = DogsListAdapter(arrayListOf()) // handling with RecycleView
-
-        //instantiate view model inside the fragment
-        viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
 
         // handle with cache
         if (context?.let { SharedPreferencesHelper.invoke(it).getLastUpdateTime()?.equals(0L) }!!) {

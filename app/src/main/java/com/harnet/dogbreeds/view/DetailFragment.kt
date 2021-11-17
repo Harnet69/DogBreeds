@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
@@ -19,7 +20,8 @@ import com.harnet.dogbreeds.model.DogPalette
 import com.harnet.dogbreeds.viewModel.DetailViewModel
 
 class DetailFragment : Fragment() {
-    private lateinit var viewModel: DetailViewModel
+    // inject viewModel via Hilt
+    private val viewModel: DetailViewModel by viewModels()
     private lateinit var dataBinding: FragmentDetailBinding
 
     override fun onCreateView(
@@ -33,7 +35,6 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
 
         // receive arguments from sending fragment
         arguments?.let {

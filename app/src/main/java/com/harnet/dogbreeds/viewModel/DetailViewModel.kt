@@ -4,9 +4,12 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.harnet.dogbreeds.model.DogBreed
 import com.harnet.dogbreeds.model.DogDatabase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel(application: Application) : BaseViewModel(application) {
+@HiltViewModel
+class DetailViewModel @Inject constructor(application: Application) : BaseViewModel(application) {
     val dogLiveData = MutableLiveData<DogBreed>()
 
     //retrieve data from database by argument id

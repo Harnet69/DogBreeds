@@ -9,14 +9,17 @@ import com.harnet.dogbreeds.model.DogsApiService
 import com.harnet.dogbreeds.util.NotificationsHelper
 import com.harnet.dogbreeds.util.OwnDataParser
 import com.harnet.dogbreeds.util.SharedPreferencesHelper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.launch
 import java.util.concurrent.CompletableFuture
+import javax.inject.Inject
 
-class ListViewModel(application: Application) : BaseViewModel(application) {
+@HiltViewModel
+class ListViewModel @Inject constructor(application: Application) : BaseViewModel(application) {
     // instantiate DogsApiService
     private val dogsApiService = DogsApiService()
 
