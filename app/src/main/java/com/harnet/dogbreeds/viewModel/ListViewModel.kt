@@ -4,22 +4,26 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.dogbreeds.model.DogBreed
-import com.harnet.dogbreeds.model.DogDatabase
 import com.harnet.dogbreeds.model.DogsApiService
+import com.harnet.dogbreeds.repository.DogRepositoryInterface
 import com.harnet.dogbreeds.util.NotificationsHelper
 import com.harnet.dogbreeds.util.OwnDataParser
 import com.harnet.dogbreeds.util.SharedPreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.launch
 import java.util.concurrent.CompletableFuture
 import javax.inject.Inject
 
 @HiltViewModel
-class ListViewModel @Inject constructor(application: Application) : BaseViewModel(application) {
+class ListViewModel @Inject constructor(
+    application: Application,
+    private val repository: DogRepositoryInterface
+) : BaseViewModel(application) {
+
     // instantiate DogsApiService
     private val dogsApiService = DogsApiService()
 
@@ -86,7 +90,8 @@ class ListViewModel @Inject constructor(application: Application) : BaseViewMode
                     override fun onSuccess(dogsList: List<DogBreed>) {
                         //store this information and time of retrieving in a db as a cache
                         storeDogInDatabase(dogsList)
-                        SharedPreferencesHelper.invoke(getApplication()).saveTimeOfUpd(System.nanoTime())
+                        SharedPreferencesHelper.invoke(getApplication())
+                            .saveTimeOfUpd(System.nanoTime())
                     }
 
                     // get an error
@@ -114,10 +119,9 @@ class ListViewModel @Inject constructor(application: Application) : BaseViewMode
     private fun storeDogInDatabase(dogsList: List<DogBreed>) {
         //launch code in separate thread in Coroutine scope
         launch {
-            val dao = DogDatabase(getApplication()).dogDAO()
-            dao.deleteAllDogs()
+            repository.deleteAllDogs()
             // argument is an expanded list of individual elements
-            val result = dao.insertAll(*dogsList.toTypedArray())
+            val result = repository.insertAll(*dogsList.toTypedArray())
             // update receiver list with assigning uuId to the right objects
             for (i in dogsList.indices) {
                 dogsList[i].uuid = result[i].toInt()
@@ -127,9 +131,9 @@ class ListViewModel @Inject constructor(application: Application) : BaseViewMode
     }
 
     // get data from dogs database
-    private fun fetchFromDatabase(){
+    private fun fetchFromDatabase() {
         launch {
-            val dogsFromDb = DogDatabase.invoke(getApplication()).dogDAO().getAllDogs()
+            val dogsFromDb = repository.getAllDogs()
             retrieveDogs(dogsFromDb)
         }
     }

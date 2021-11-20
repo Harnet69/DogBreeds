@@ -1,5 +1,6 @@
 package com.harnet.dogbreeds.view
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -14,9 +15,11 @@ import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.ItemDogBinding
 import com.harnet.dogbreeds.model.DogBreed
 import com.harnet.dogbreeds.model.DogPalette
+import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 
-class DogsListAdapter @Inject constructor() :
+// context argument was added for Unit testing example purposes
+class DogsListAdapter @Inject constructor(@ActivityContext private val context: Context) :
     RecyclerView.Adapter<DogsListAdapter.DogViewHolder>() {
     private val dogsList: ArrayList<DogBreed> = arrayListOf()
 
@@ -97,7 +100,7 @@ class DogsListAdapter @Inject constructor() :
 
     // Palette handler
     private fun setupBackgroundColor(holder: DogViewHolder, url: String) {
-        Glide.with(holder.view.dogLifespan.context)
+        Glide.with(context)
             .asBitmap()
             .load(url)
             .into(object : CustomTarget<Bitmap>() {
