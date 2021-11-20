@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.harnet.dogbreeds.model.DogDAO
 import com.harnet.dogbreeds.model.DogDatabase
+import com.harnet.dogbreeds.model.DogsApiService
 import com.harnet.dogbreeds.repository.DogRepository
 import com.harnet.dogbreeds.repository.DogRepositoryInterface
 import dagger.Module
@@ -29,7 +30,7 @@ object DogBreedsAppModule {
 
     @Singleton
     @Provides
-    fun provideDogRepository(dao: DogDAO) = DogRepository(dao) as DogRepositoryInterface
+    fun provideDogRepository(dao: DogDAO, dogsApiService: DogsApiService) = DogRepository(dao, dogsApiService) as DogRepositoryInterface
 
 
 }

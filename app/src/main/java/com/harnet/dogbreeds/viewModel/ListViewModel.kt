@@ -4,10 +4,8 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.dogbreeds.model.DogBreed
-import com.harnet.dogbreeds.model.DogsApiService
 import com.harnet.dogbreeds.repository.DogRepositoryInterface
 import com.harnet.dogbreeds.util.NotificationsHelper
-import com.harnet.dogbreeds.util.OwnDataParser
 import com.harnet.dogbreeds.util.SharedPreferencesHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,17 +13,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import java.util.concurrent.CompletableFuture
 import javax.inject.Inject
 
 @HiltViewModel
-class ListViewModel @Inject constructor(
-    application: Application,
-    private val repository: DogRepositoryInterface
-) : BaseViewModel(application) {
-
-    // instantiate DogsApiService
-    private val dogsApiService = DogsApiService()
+class ListViewModel @Inject constructor(application: Application, private val repository: DogRepositoryInterface)
+    : BaseViewModel(application) {
 
     // allows observe observable Single<List<DogBreed>>, handle retrieving and avoid memory leaks
     // (can be produced because of waiting for observable while app has been destroyed)
@@ -40,69 +32,56 @@ class ListViewModel @Inject constructor(
     // listening is data loading
     val mLoading = MutableLiveData<Boolean>()
 
-    //TODO make a switcher for switch between two approaches of API fetching
-
     //refresh information from remote API
     fun refreshFromAPI() {
         fetchFromRemoteWithRetrofit()
-//        fetchFromRemoteWithOwnParser()
-        Toast.makeText(getApplication(), "Get data from API", Toast.LENGTH_SHORT).show()
-        // notification
-        NotificationsHelper(getApplication()).createNotification()
     }
 
     //refresh information from a database
     fun refreshFromDatabase() {
         fetchFromDatabase()
-//        fetchFromRemoteWithOwnParser()
-//        Toast.makeText(getApplication(), "Database data", Toast.LENGTH_SHORT).show()
-    }
-
-    // fetches data with OWN API PARSER from remote API
-    private fun fetchFromRemoteWithOwnParser() {
-        //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
-        val ownDataParser = OwnDataParser()
-        // set loading flag to true
-        mLoading.value = true
-
-        CompletableFuture.supplyAsync { ownDataParser.parseDataFromJSONStr() }
-            .thenAccept { dogsList ->
-                storeDogInDatabase(dogsList)
-//                retrieveDogs(dogsList)
-            }
     }
 
     // fetches data with Retrofit library from remote API
     private fun fetchFromRemoteWithRetrofit() {
-        //TODO !!!DON'T FORGET TO ADD INTERNET PERMISSION BEFORE IMPLEMENTING!!!
         //set loading flag to true
         mLoading.value = true
 
-        disposable.add(
-            // set it to a different thread(passing this call to the background thread)
-            dogsApiService.getDogs()
-                .subscribeOn(Schedulers.newThread())
-                // retrieve it from a background to the main thread for displaying
-                .observeOn(AndroidSchedulers.mainThread())
-                // pass our Single object here, it's created and implemented
-                .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>() {
-                    // get list of DogBreed objects
-                    override fun onSuccess(dogsList: List<DogBreed>) {
-                        //store this information and time of retrieving in a db as a cache
-                        storeDogInDatabase(dogsList)
-                        SharedPreferencesHelper.invoke(getApplication())
-                            .saveTimeOfUpd(System.nanoTime())
-                    }
+        launch {
+            disposable.add(
+                // set it to a different thread(passing this call to the background thread)
+                repository.getAllDogsFromAPI()
+                    .subscribeOn(Schedulers.newThread())
+                    // retrieve it from a background to the main thread for displaying
+                    .observeOn(AndroidSchedulers.mainThread())
+                    // pass our Single object here, it's created and implemented
+                    .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>() {
+                        // get list of DogBreed objects
+                        override fun onSuccess(dogsList: List<DogBreed>) {
+                            //store this information and time of retrieving in a db as a cache
+                            storeDogInDatabase(dogsList)
+                            SharedPreferencesHelper.invoke(getApplication())
+                                .saveTimeOfUpd(System.nanoTime())
+                            Toast.makeText(
+                                getApplication(),
+                                "Get data from API",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            // notification
+                            NotificationsHelper(getApplication()).createNotification()
+                        }
 
-                    // get an error
-                    override fun onError(e: Throwable) {
-                        mDogsLoadError.value = true
-                        mLoading.value = false
-                        // print stack of error to handling it
-                        e.printStackTrace()
-                    }
-                })
-        )
+                        // get an error
+                        override fun onError(e: Throwable) {
+                            mDogsLoadError.value = true
+                            mLoading.value = false
+                            // print stack of error to handling it
+                            e.printStackTrace()
+                        }
+                    })
+            )
+        }
     }
 
     // retrieve dogs and set UI components. Can work separately from DB
@@ -133,7 +112,7 @@ class ListViewModel @Inject constructor(
     // get data from dogs database
     private fun fetchFromDatabase() {
         launch {
-            val dogsFromDb = repository.getAllDogs()
+            val dogsFromDb = repository.getAllDogsFromDb()
             retrieveDogs(dogsFromDb)
         }
     }
