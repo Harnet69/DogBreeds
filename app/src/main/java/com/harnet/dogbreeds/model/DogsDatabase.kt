@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 // singleton for handling with a database
-@Database(entities = arrayOf(DogBreed::class), version = 1)
-abstract class DogDatabase : RoomDatabase() {
+@Database(entities = [DogBreed::class], version = 1)
+abstract class DogsDatabase : RoomDatabase() {
     // return DogDAO interface
     abstract fun dogDAO(): DogDAO
 
@@ -15,7 +15,7 @@ abstract class DogDatabase : RoomDatabase() {
     companion object {
         //`volatile` meaning that writes to this field are immediately made visible to other threads
         @Volatile
-        private var instance: DogDatabase? = null
+        private var instance: DogsDatabase? = null
         private val LOCK = Any()
 
         //return instance if instance is null
@@ -29,7 +29,7 @@ abstract class DogDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext, // because usual context can be null(f ex. user rotates a device)
-            DogDatabase::class.java,
+            DogsDatabase::class.java,
             "dogDatabase"
         ).build()
     }

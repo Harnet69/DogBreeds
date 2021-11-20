@@ -2,19 +2,18 @@ package com.harnet.dogbreeds.util
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.navigation.Navigation
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.harnet.dogbreeds.R
-import com.harnet.dogbreeds.view.DogsListAdapter
 import com.harnet.dogbreeds.view.ListFragmentDirections
 import java.util.concurrent.CompletableFuture
+
+const val BASE_URL = "https://raw.githubusercontent.com"
 
 //little loading spinner for image loading
 fun getProgressDrawable(context: Context): CircularProgressDrawable {
