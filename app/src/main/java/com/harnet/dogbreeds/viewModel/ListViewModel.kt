@@ -16,8 +16,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ListViewModel @Inject constructor(application: Application, private val repository: DogRepositoryInterface)
-    : BaseViewModel(application) {
+class ListViewModel @Inject constructor(
+    application: Application,
+    private val repository: DogRepositoryInterface
+) : BaseViewModel(application) {
 
     // allows observe observable Single<List<DogBreed>>, handle retrieving and avoid memory leaks
     // (can be produced because of waiting for observable while app has been destroyed)

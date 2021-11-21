@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProviders
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -18,7 +17,9 @@ import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.FragmentDetailBinding
 import com.harnet.dogbreeds.model.DogPalette
 import com.harnet.dogbreeds.viewModel.DetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
     // inject viewModel via Hilt
     private val viewModel: DetailViewModel by viewModels()
