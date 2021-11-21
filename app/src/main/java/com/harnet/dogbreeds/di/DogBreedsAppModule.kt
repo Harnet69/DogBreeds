@@ -2,6 +2,9 @@ package com.harnet.dogbreeds.di
 
 import android.content.Context
 import androidx.room.Room
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.model.DogDAO
 import com.harnet.dogbreeds.model.DogsDatabase
 import com.harnet.dogbreeds.model.DogsAPI
@@ -49,4 +52,12 @@ object DogBreedsAppModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(DogsAPI::class.java)// create model class
+
+    @Singleton
+    @Provides
+    fun injectGlide(@ApplicationContext context: Context) = Glide.with(context)
+        .setDefaultRequestOptions(
+            RequestOptions().placeholder(R.drawable.ic_img_default)
+                .error(R.drawable.ic_launcher_foreground)
+        )
 }

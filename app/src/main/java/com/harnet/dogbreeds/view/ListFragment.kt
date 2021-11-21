@@ -19,11 +19,10 @@ import javax.inject.Inject
 class ListFragment : Fragment() {
     // inject viewModel via Hilt
     private val viewModel: ListViewModel by viewModels()
+    private val dataBinding: FragmentListBinding by FragmentBindingProvider(R.layout.fragment_list)
 
     @Inject
     lateinit var dogListAdapter: DogsListAdapter
-
-    private val dataBinding: FragmentListBinding by FragmentBindingProvider(R.layout.fragment_list)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,8 +33,6 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        dogListAdapter = DogsListAdapter(arrayListOf()) // handling with RecycleView
 
         // handle with cache
         if (context?.let { SharedPreferencesHelper.invoke(it).getLastUpdateTime()?.equals(0L) }!!) {

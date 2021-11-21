@@ -39,7 +39,6 @@ class DetailFragment : Fragment() {
         arguments?.let {
             val dogId = DetailFragmentArgs.fromBundle(it).dogId
             //Retrieve a data from DetailViewModel
-            //TODO send a dog id as argument
             viewModel.fetch(dogId)
 
         }
