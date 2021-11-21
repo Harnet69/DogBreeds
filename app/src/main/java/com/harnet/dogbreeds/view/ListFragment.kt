@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.harnet.dogbreeds.util.FragmentBindingProvider
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.FragmentListBinding
 import com.harnet.dogbreeds.util.SharedPreferencesHelper
@@ -24,13 +23,12 @@ class ListFragment : Fragment() {
     @Inject
     lateinit var dogListAdapter: DogsListAdapter
 
-    private lateinit var dataBinding: FragmentListBinding
+    private val dataBinding: FragmentListBinding by FragmentBindingProvider(R.layout.fragment_list)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false)
         return dataBinding.root
     }
 
@@ -73,7 +71,7 @@ class ListFragment : Fragment() {
         observeViewModel()
     }
 
-    fun observeViewModel() {
+    private fun observeViewModel() {
         // update the layout using values of mutable variables from a ViewModel
         viewModel.mDogs.observe(this, { dogs ->
             //checking is dogs list isn't null
