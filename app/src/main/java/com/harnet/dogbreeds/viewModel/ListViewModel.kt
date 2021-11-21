@@ -114,8 +114,7 @@ class ListViewModel @Inject constructor(
     // get data from dogs database
     private fun fetchFromDatabase() {
         launch {
-            val dogsFromDb = repository.getAllDogsFromDb()
-            retrieveDogs(dogsFromDb)
+            retrieveDogs(repository.getAllDogsFromDb())
         }
     }
 
