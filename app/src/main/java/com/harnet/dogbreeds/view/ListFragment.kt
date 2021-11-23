@@ -11,14 +11,14 @@ import com.harnet.dogbreeds.util.FragmentBindingProvider
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.FragmentListBinding
 import com.harnet.dogbreeds.util.SharedPreferencesHelper
-import com.harnet.dogbreeds.viewModel.ListViewModel
+import com.harnet.dogbreeds.viewModel.DogsListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ListFragment : Fragment() {
     // inject viewModel via Hilt
-    private val viewModel: ListViewModel by viewModels()
+    private val viewModelDogs: DogsListViewModel by viewModels()
     private val dataBinding: FragmentListBinding by FragmentBindingProvider(R.layout.fragment_list)
 
     @Inject
@@ -37,9 +37,9 @@ class ListFragment : Fragment() {
         // handle with cache
         if (context?.let { SharedPreferencesHelper.invoke(it).getLastUpdateTime()?.equals(0L) }!!) {
             //initiating observable variables
-            viewModel.refreshFromAPI()
+            viewModelDogs.refreshFromAPI(requireContext())
         } else {
-            viewModel.refreshFromDatabase()
+            viewModelDogs.refreshFromDatabase()
         }
 
         // RecycleView applying
@@ -61,7 +61,7 @@ class ListFragment : Fragment() {
             dataBinding.dogsListRecyclerView.visibility = View.GONE
             dataBinding.listErrorTextView.visibility = View.GONE
             dataBinding.loadingViewProgressBar.visibility = View.VISIBLE
-            viewModel.refreshFromAPI()
+            viewModelDogs.refreshFromAPI(requireContext())
             dataBinding.refreshLayout.isRefreshing = false // disappears little spinner on the top
         }
 
@@ -70,7 +70,7 @@ class ListFragment : Fragment() {
 
     private fun observeViewModel() {
         // update the layout using values of mutable variables from a ViewModel
-        viewModel.mDogs.observe(this, { dogs ->
+        viewModelDogs.mDogs.observe(this, { dogs ->
             //checking is dogs list isn't null
             dogs?.let {
                 dataBinding.dogsListRecyclerView.visibility = View.VISIBLE
@@ -79,7 +79,7 @@ class ListFragment : Fragment() {
         })
 
         // make error TextViewVisible
-        viewModel.mDogsLoadError.observe(this, { isError ->
+        viewModelDogs.mDogsLoadError.observe(this, { isError ->
             // check isError not null
             isError?.let {
                 //  ternary operator
@@ -88,7 +88,7 @@ class ListFragment : Fragment() {
         })
 
         // loading spinner
-        viewModel.mLoading.observe(this, { isLoading ->
+        viewModelDogs.mLoading.observe(this, { isLoading ->
             //check isLoading not null
             isLoading?.let {
                 // if data still loading - show spinner, else - remove it

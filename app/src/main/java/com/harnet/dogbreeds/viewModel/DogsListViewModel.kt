@@ -1,8 +1,13 @@
 package com.harnet.dogbreeds.viewModel
 
 import android.app.Application
+import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.harnet.dogbreeds.di.TAG
 import com.harnet.dogbreeds.model.DogBreed
 import com.harnet.dogbreeds.repository.DogRepositoryInterface
 import com.harnet.dogbreeds.util.NotificationsHelper
@@ -16,10 +21,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ListViewModel @Inject constructor(
-    application: Application,
+class DogsListViewModel @Inject constructor(
     private val repository: DogRepositoryInterface
-) : BaseViewModel(application) {
+) : ViewModel() {
 
     // allows observe observable Single<List<DogBreed>>, handle retrieving and avoid memory leaks
     // (can be produced because of waiting for observable while app has been destroyed)
@@ -35,8 +39,8 @@ class ListViewModel @Inject constructor(
     val mLoading = MutableLiveData<Boolean>()
 
     //refresh information from remote API
-    fun refreshFromAPI() {
-        fetchFromRemoteWithRetrofit()
+    fun refreshFromAPI(context: Context) {
+        fetchFromRemoteWithRetrofit(context)
     }
 
     //refresh information from a database
@@ -45,11 +49,11 @@ class ListViewModel @Inject constructor(
     }
 
     // fetches data with Retrofit library from remote API
-    private fun fetchFromRemoteWithRetrofit() {
+    private fun fetchFromRemoteWithRetrofit(context: Context) {
         //set loading flag to true
         mLoading.value = true
 
-        launch {
+        viewModelScope.launch {
             disposable.add(
                 // set it to a different thread(passing this call to the background thread)
                 repository.getAllDogsFromAPI()
@@ -61,17 +65,18 @@ class ListViewModel @Inject constructor(
                         // get list of DogBreed objects
                         override fun onSuccess(dogsList: List<DogBreed>) {
                             //store this information and time of retrieving in a db as a cache
+                            Log.i(TAG, "onSuccess: ")
                             storeDogInDatabase(dogsList)
-                            SharedPreferencesHelper.invoke(getApplication())
+                            SharedPreferencesHelper.invoke(context)
                                 .saveTimeOfUpd(System.nanoTime())
                             Toast.makeText(
-                                getApplication(),
+                                context,
                                 "Get data from API",
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
                             // notification
-                            NotificationsHelper(getApplication()).createNotification()
+                            NotificationsHelper(context).createNotification()
                         }
 
                         // get an error
@@ -99,7 +104,7 @@ class ListViewModel @Inject constructor(
     // initiate and handle data in database
     private fun storeDogInDatabase(dogsList: List<DogBreed>) {
         //launch code in separate thread in Coroutine scope
-        launch {
+        viewModelScope.launch {
             repository.deleteAllDogs()
             // argument is an expanded list of individual elements
             val result = repository.insertAll(*dogsList.toTypedArray())
@@ -113,7 +118,7 @@ class ListViewModel @Inject constructor(
 
     // get data from dogs database
     private fun fetchFromDatabase() {
-        launch {
+        viewModelScope.launch {
             retrieveDogs(repository.getAllDogsFromDb())
         }
     }

@@ -16,13 +16,13 @@ import com.harnet.dogbreeds.util.FragmentBindingProvider
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.FragmentDetailBinding
 import com.harnet.dogbreeds.model.DogPalette
-import com.harnet.dogbreeds.viewModel.DetailViewModel
+import com.harnet.dogbreeds.viewModel.DogDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
     // inject viewModel via Hilt
-    private val viewModel: DetailViewModel by viewModels()
+    private val viewModelDog: DogDetailViewModel by viewModels()
     private val dataBinding: FragmentDetailBinding by FragmentBindingProvider(R.layout.fragment_detail)
 
     override fun onCreateView(
@@ -39,14 +39,14 @@ class DetailFragment : Fragment() {
         arguments?.let {
             val dogId = DetailFragmentArgs.fromBundle(it).dogId
             //Retrieve a data from DetailViewModel
-            viewModel.fetch(dogId)
+            viewModelDog.fetch(dogId)
 
         }
         observeViewModel()
     }
 
     private fun observeViewModel() {
-        viewModel.dogLiveData.observe(this, { dog ->
+        viewModelDog.dogLiveData.observe(this, { dog ->
             // if dog isn't null
             dog?.let {
                 dataBinding.dogObj = dog
