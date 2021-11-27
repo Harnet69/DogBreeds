@@ -1,6 +1,5 @@
 package com.harnet.dogbreeds.viewModel
 
-import android.app.Application
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
@@ -102,7 +101,7 @@ class DogsListViewModel @Inject constructor(
     }
 
     // initiate and handle data in database
-    private fun storeDogInDatabase(dogsList: List<DogBreed>) {
+    fun storeDogInDatabase(dogsList: List<DogBreed>) {
         //launch code in separate thread in Coroutine scope
         viewModelScope.launch {
             repository.deleteAllDogs()
