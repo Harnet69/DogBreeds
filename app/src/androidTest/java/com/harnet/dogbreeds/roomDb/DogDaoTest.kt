@@ -36,6 +36,11 @@ class DogDaoTest {
 
     private lateinit var dao: DogDAO
 
+    private val dogExample = DogBreed(
+        "1", "Test breed", "100 years",
+        "Test group", "Test", "Test", "test.com"
+    )
+
     @Before
     fun setup() {
         database = Room.inMemoryDatabaseBuilder(
@@ -54,16 +59,38 @@ class DogDaoTest {
     }
 
     @Test
-    fun addDogsToDb() = runBlocking{
-        val dogExample = DogBreed(
-            "1", "Test breed", "100 years",
-            "Test group", "Test", "Test", "test.com"
-        )
-
+    fun addDogsToDbTesting() = runBlocking{
         dao.insertAll(dogExample)
-        val dogList = dao.getAllDogs()
+        val dogsList = dao.getAllDogs()
 
-        assertThat(dogList).contains(dogExample)
+        assertThat(dogsList).contains(dogExample)
+    }
+
+    @Test
+    fun deleteDogsFromDbTesting() = runBlocking{
+        dao.insertAll(dogExample)
+        val dogsList = dao.getAllDogs()
+        dao.deleteAllDogs()
+
+        assertThat(dogsList).isNotEmpty()
+    }
+
+    @Test
+    fun getDogByIdFromDbTesting() = runBlocking{
+        dao.insertAll(dogExample)
+
+        val dog = dogExample.breedId?.let { dao.getDog(it) }
+
+        assertThat(dog).isNotNull()
+    }
+
+    @Test
+    fun getDogByUuIdFromDbTesting() = runBlocking{
+        dao.insertAll(dogExample)
+
+        val dog =  dao.getDog(1)
+
+        assertThat(dog).isNotNull()
     }
 
 }
