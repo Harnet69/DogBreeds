@@ -26,10 +26,13 @@ Android application for introducing with dog breeds and showing the breed detail
 - SonarCloud for monitoring a code quality
 - Fastlane as Android Build and Release Process automation(partly implemented)
 - Room database for storing data, which was got from backend API, and when the screen will be updates - data will get from the database
-### In progress:
 - Palette Library for managing background of details page
 - dataBinding library to map information from backend to interfaces(screen layouts: detail screen will be binding to item of recycler view)
 - Android permissions for SMS message
-- Share preferences for sharing app's data between another apps
 - Notifications when the data was got from backend API
-- Multidex for fixing errors
+### In progress:
+- Dependency injections via Hilt
+- Unit tests
+- Integration tests
+- Instrumental tests
+- Share preferences for sharing app's data between another apps
