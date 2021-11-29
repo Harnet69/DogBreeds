@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.atilsamancioglu.artbookhilttesting.MainCoroutineRule
 import com.atilsamancioglu.artbookhilttesting.getOrAwaitValueTest
 import com.google.common.truth.Truth.assertThat
-import com.harnet.dogbreeds.model.DogBreed
+import com.harnet.dogbreeds.roomDb.DogBreed
 import com.harnet.dogbreeds.repository.DogRepositoryFake
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before

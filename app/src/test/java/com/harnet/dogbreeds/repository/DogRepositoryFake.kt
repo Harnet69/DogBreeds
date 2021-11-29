@@ -1,7 +1,7 @@
 package com.harnet.dogbreeds.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.harnet.dogbreeds.model.DogBreed
+import com.harnet.dogbreeds.roomDb.DogBreed
 import io.reactivex.Single
 
 class DogRepositoryFake: DogRepositoryInterface {
@@ -21,8 +21,6 @@ class DogRepositoryFake: DogRepositoryInterface {
     override suspend fun getAllDogsFromDb(): List<DogBreed> = dogsList
 
     override suspend fun deleteAllDogs() { dogsList.clear() }
-
-    override suspend fun getDog(dogUuid: Int): DogBreed = dogsList.first { it.uuid == dogUuid }
 
     override suspend fun getDog(id: String): DogBreed = dogsList.first { it.breedId == id }
 

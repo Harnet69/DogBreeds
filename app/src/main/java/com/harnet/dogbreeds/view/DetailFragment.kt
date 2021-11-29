@@ -15,7 +15,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.harnet.dogbreeds.util.FragmentBindingProvider
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.FragmentDetailBinding
-import com.harnet.dogbreeds.model.DogPalette
+import com.harnet.dogbreeds.roomDb.DogPalette
 import com.harnet.dogbreeds.viewModel.DogDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

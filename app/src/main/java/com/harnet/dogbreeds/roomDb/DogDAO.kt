@@ -1,4 +1,4 @@
-package com.harnet.dogbreeds.model
+package com.harnet.dogbreeds.roomDb
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -15,9 +15,6 @@ interface DogDAO {
     @Query("DELETE FROM dogbreed")
     suspend fun deleteAllDogs()
 
-    @Query("SELECT * FROM dogbreed WHERE uuid = :dogUuid")
-    suspend fun getDog(dogUuid: Int): DogBreed
-
     @Query("SELECT * FROM dogbreed WHERE breed_id = :id")
-    suspend fun getDog(id: String): DogBreed
+    suspend fun getDogById(id: String): DogBreed
 }

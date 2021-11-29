@@ -5,11 +5,11 @@
 
         <variable
             name="dog"
-            type="com.harnet.dogbreeds.model.DogBreed" />
+            type="com.harnet.dogbreeds.roomDb.DogBreed" />
 
         <variable
             name="palette"
-            type="com.harnet.dogbreeds.model.DogPalette" />
+            type="com.harnet.dogbreeds.roomDb.DogPalette" />
     </data>
 
     <LinearLayout

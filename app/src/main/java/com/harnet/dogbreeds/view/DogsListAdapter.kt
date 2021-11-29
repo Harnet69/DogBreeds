@@ -13,8 +13,8 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.ItemDogBinding
-import com.harnet.dogbreeds.model.DogBreed
-import com.harnet.dogbreeds.model.DogPalette
+import com.harnet.dogbreeds.roomDb.DogBreed
+import com.harnet.dogbreeds.roomDb.DogPalette
 import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 

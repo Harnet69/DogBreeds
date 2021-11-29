@@ -1,19 +1,17 @@
 package com.harnet.dogbreeds.roomDb
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import com.harnet.dogbreeds.model.DogBreed
-import com.harnet.dogbreeds.model.DogDAO
-import com.harnet.dogbreeds.model.DogsDatabase
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
 
 /*
     Add to build.gradle to android section
@@ -27,12 +25,18 @@ import org.junit.Test
  */
 @SmallTest
 @ExperimentalCoroutinesApi
+@HiltAndroidTest
 class DogDaoTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    @get:Rule
+    val hiltRule = HiltAndroidRule(this)
+
+    @Inject
     lateinit var database: DogsDatabase
+//    lateinit var database: DogsDatabase
 
     private lateinit var dao: DogDAO
 
@@ -43,12 +47,17 @@ class DogDaoTest {
 
     @Before
     fun setup() {
+        /*
         database = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
             DogsDatabase::class.java
         )
             .allowMainThreadQueries()
             .build()
+
+         */
+
+        hiltRule.inject()
 
         dao = database.dogDAO()
     }
@@ -67,30 +76,21 @@ class DogDaoTest {
     }
 
     @Test
+    fun getDogByIdFromDbTesting() = runBlocking{
+        dao.insertAll(dogExample)
+
+        val dog = dogExample.breedId?.let { dao.getDogById(it) }
+
+        assertThat(dog).isNotNull()
+    }
+
+    @Test
     fun deleteDogsFromDbTesting() = runBlocking{
         dao.insertAll(dogExample)
         val dogsList = dao.getAllDogs()
         dao.deleteAllDogs()
 
         assertThat(dogsList).isNotEmpty()
-    }
-
-    @Test
-    fun getDogByIdFromDbTesting() = runBlocking{
-        dao.insertAll(dogExample)
-
-        val dog = dogExample.breedId?.let { dao.getDog(it) }
-
-        assertThat(dog).isNotNull()
-    }
-
-    @Test
-    fun getDogByUuIdFromDbTesting() = runBlocking{
-        dao.insertAll(dogExample)
-
-        val dog =  dao.getDog(1)
-
-        assertThat(dog).isNotNull()
     }
 
 }

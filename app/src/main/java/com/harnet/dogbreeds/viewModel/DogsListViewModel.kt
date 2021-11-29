@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.harnet.dogbreeds.di.TAG
-import com.harnet.dogbreeds.model.DogBreed
+import com.harnet.dogbreeds.roomDb.DogBreed
 import com.harnet.dogbreeds.repository.DogRepositoryInterface
 import com.harnet.dogbreeds.util.NotificationsHelper
 import com.harnet.dogbreeds.util.SharedPreferencesHelper

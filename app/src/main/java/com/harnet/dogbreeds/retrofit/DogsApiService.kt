@@ -1,5 +1,6 @@
-package com.harnet.dogbreeds.model
+package com.harnet.dogbreeds.retrofit
 
+import com.harnet.dogbreeds.roomDb.DogBreed
 import io.reactivex.Single
 import javax.inject.Inject
 

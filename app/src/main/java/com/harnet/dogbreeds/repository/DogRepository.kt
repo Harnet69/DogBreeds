@@ -1,8 +1,8 @@
 package com.harnet.dogbreeds.repository
 
-import com.harnet.dogbreeds.model.DogBreed
-import com.harnet.dogbreeds.model.DogDAO
-import com.harnet.dogbreeds.model.DogsApiService
+import com.harnet.dogbreeds.roomDb.DogBreed
+import com.harnet.dogbreeds.roomDb.DogDAO
+import com.harnet.dogbreeds.retrofit.DogsApiService
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -14,9 +14,7 @@ class DogRepository @Inject constructor(private val dogDAO: DogDAO, private val 
 
     override suspend fun getAllDogsFromDb(): List<DogBreed> = dogDAO.getAllDogs()
 
+    override suspend fun getDog(id: String): DogBreed = dogDAO.getDogById(id)
+
     override suspend fun deleteAllDogs() { dogDAO.deleteAllDogs() }
-
-    override suspend fun getDog(dogUuid: Int): DogBreed = dogDAO.getDog(dogUuid)
-
-    override suspend fun getDog(id: String): DogBreed = dogDAO.getDog(id)
 }

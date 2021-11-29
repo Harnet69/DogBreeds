@@ -5,10 +5,10 @@ import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.harnet.dogbreeds.R
-import com.harnet.dogbreeds.model.DogDAO
-import com.harnet.dogbreeds.model.DogsDatabase
-import com.harnet.dogbreeds.model.DogsAPI
-import com.harnet.dogbreeds.model.DogsApiService
+import com.harnet.dogbreeds.roomDb.DogDAO
+import com.harnet.dogbreeds.roomDb.DogsDatabase
+import com.harnet.dogbreeds.retrofit.DogsAPI
+import com.harnet.dogbreeds.retrofit.DogsApiService
 import com.harnet.dogbreeds.repository.DogRepository
 import com.harnet.dogbreeds.repository.DogRepositoryInterface
 import com.harnet.dogbreeds.util.BASE_URL
@@ -24,7 +24,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DogBreedsAppModule {
+object AppModule {
 
     @Singleton
     @Provides

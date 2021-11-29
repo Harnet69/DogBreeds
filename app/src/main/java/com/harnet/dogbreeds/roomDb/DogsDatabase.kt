@@ -1,4 +1,4 @@
-package com.harnet.dogbreeds.model
+package com.harnet.dogbreeds.roomDb
 
 import android.content.Context
 import androidx.room.Database

@@ -1,6 +1,6 @@
 package com.harnet.dogbreeds.repository
 
-import com.harnet.dogbreeds.model.DogBreed
+import com.harnet.dogbreeds.roomDb.DogBreed
 import io.reactivex.Single
 
 interface DogRepositoryInterface {
@@ -11,11 +11,9 @@ interface DogRepositoryInterface {
 
     suspend fun getAllDogsFromDb(): List<DogBreed>
 
-    suspend fun deleteAllDogs()
-
-    suspend fun getDog(dogUuid: Int): DogBreed
-
     suspend fun getDog(id: String): DogBreed
+
+    suspend fun deleteAllDogs()
 
 
 }
