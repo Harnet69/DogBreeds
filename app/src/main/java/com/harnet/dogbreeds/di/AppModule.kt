@@ -12,8 +12,7 @@ import com.harnet.dogbreeds.retrofit.DogsApiService
 import com.harnet.dogbreeds.repository.DogRepository
 import com.harnet.dogbreeds.repository.DogRepositoryInterface
 import com.harnet.dogbreeds.util.BASE_URL
-import dagger.Module
-import dagger.Provides
+import dagger.*
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent

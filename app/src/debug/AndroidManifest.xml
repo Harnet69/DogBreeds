@@ -5,8 +5,8 @@
     <application>
         <activity
             android:name=".HiltTestActivity"
-            android:exported="false">
-
+            android:exported="false"
+            android:usesCleartextTraffic="true">
         </activity>
 
     </application>
