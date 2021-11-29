@@ -5,12 +5,12 @@
 
     <application
         tools:replace="android:allowBackup"
-        android:allowBackup="false">
+        android:allowBackup="false"
+        android:usesCleartextTraffic="false">
         <activity
             android:name=".HiltTestActivity"
             android:exported="false"
-            android:allowBackup="false"
-            android:usesCleartextTraffic="false">
+            android:allowBackup="false">
         </activity>
 
     </application>
