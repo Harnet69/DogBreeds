@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.harnet.dogbreeds">
 
-    <application>
+    <application
+        tools:replace="android:allowBackup"
+        android:allowBackup="false">
         <activity
             android:name=".HiltTestActivity"
             android:exported="false"
-            android:usesCleartextTraffic="true">
+            android:allowBackup="false"
+            android:usesCleartextTraffic="false">
         </activity>
 
     </application>
