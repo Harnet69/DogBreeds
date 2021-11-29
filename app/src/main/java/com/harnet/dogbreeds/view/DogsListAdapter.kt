@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.palette.graphics.Palette
@@ -14,12 +13,15 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.harnet.dogbreeds.R
 import com.harnet.dogbreeds.databinding.ItemDogBinding
-import com.harnet.dogbreeds.model.DogBreed
-import com.harnet.dogbreeds.model.DogPalette
+import com.harnet.dogbreeds.roomDb.DogBreed
+import com.harnet.dogbreeds.roomDb.DogPalette
+import dagger.hilt.android.qualifiers.ActivityContext
+import javax.inject.Inject
 
-class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
+// context argument was added for Unit testing example purposes
+class DogsListAdapter @Inject constructor(@ActivityContext private val context: Context) :
     RecyclerView.Adapter<DogsListAdapter.DogViewHolder>() {
-    private lateinit var dataBinding: ItemDogBinding
+    private val dogsList: ArrayList<DogBreed> = arrayListOf()
 
     //for updating information from a backend
     fun updateDogList(newDogsList: List<DogBreed>) {
@@ -30,10 +32,10 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
-        val inflator = LayoutInflater.from(parent.context)
+        val inflater = LayoutInflater.from(parent.context)
         // elements of the list transformed into views
         val view =
-            DataBindingUtil.inflate<ItemDogBinding>(inflator, R.layout.item_dog, parent, false)
+            DataBindingUtil.inflate<ItemDogBinding>(inflater, R.layout.item_dog, parent, false)
         return DogViewHolder(view)
     }
 
@@ -93,12 +95,12 @@ class DogsListAdapter(val dogsList: ArrayList<DogBreed>) :
 
     //Fix blinking RecyclerView
     override fun getItemId(position: Int): Long {
-        return dogsList.get(position).uuid.toLong()
+        return dogsList[position].uuid.toLong()
     }
 
     // Palette handler
     private fun setupBackgroundColor(holder: DogViewHolder, url: String) {
-        Glide.with(holder.view.dogLifespan.context)
+        Glide.with(context)
             .asBitmap()
             .load(url)
             .into(object : CustomTarget<Bitmap>() {

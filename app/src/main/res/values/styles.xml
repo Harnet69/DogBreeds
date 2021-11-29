@@ -10,12 +10,14 @@
     <!--Style for a dog item -->
     <style name="Title">
         <item name="android:textSize">18sp</item>
+        <item name="android:layout_margin">4dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="Text">
         <item name="android:textSize">14sp</item>
+        <item name="android:layout_margin">4dp</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
 

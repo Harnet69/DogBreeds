@@ -1,14 +1,13 @@
 package com.harnet.dogbreeds.util
 
-import com.harnet.dogbreeds.model.DogBreed
+import com.harnet.dogbreeds.roomDb.DogBreed
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 import java.util.concurrent.ExecutionException
 
 class OwnDataParser {
     private val API_URL = "https://raw.githubusercontent.com/DevTides/DogsApi/master/dogs.json"
-    val ownDataDowloader = OwnDataDownloader()
+    private val ownDataDowloader = OwnDataDownloader()
 
     fun parseDataFromJSONStr(): MutableList<DogBreed> {
         val dogs = mutableListOf<DogBreed>()
@@ -25,7 +24,7 @@ class OwnDataParser {
         }
 
         // parse data from JsonString
-        val jsonArray = JSONArray(content);
+        val jsonArray = JSONArray(content)
         for (i in 0 until jsonArray.length()) {
             val obj: JSONObject = jsonArray.get(i) as JSONObject
             val id: String = obj.optString("id")
