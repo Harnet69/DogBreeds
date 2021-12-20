@@ -16,6 +16,8 @@ import dagger.*
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -42,15 +44,25 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDogsAPI(): DogsAPI =
-        Retrofit.Builder()
+    fun provideDogsAPI(): DogsAPI {
+        // OkHttp interceptor which logs HTTP request and response data
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC)
+        val client = OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
+
+        return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(client)
             // handle all basic communication, separate threads, errors and converts JSON to object of our class
             .addConverterFactory(GsonConverterFactory.create())
             // convert this object to observable Single<List<>>
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(DogsAPI::class.java)// create model class
+
+    }
 
     @Singleton
     @Provides

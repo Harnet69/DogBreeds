@@ -100,6 +100,10 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rx2JavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rx2JavaVersion"
 
+    // OkHttp interceptor which logs HTTP request and response data
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+
     implementation "com.github.bumptech.glide:glide:$glideVersion"
 
     // TestImplementations
